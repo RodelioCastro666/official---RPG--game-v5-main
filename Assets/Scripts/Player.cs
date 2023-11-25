@@ -34,6 +34,9 @@ public class Player : Character
     private Transform[] exitPoints;
 
     [SerializeField]
+    private Transform firePoint;
+
+    [SerializeField]
     private Blocks[] blocks;
 
     [SerializeField]
@@ -41,6 +44,8 @@ public class Player : Character
 
     [SerializeField]
     private Crafting profession;
+
+    Vector2 offset;
 
     private Vector2 initPos;
 
@@ -59,6 +64,9 @@ public class Player : Character
     [SerializeField]
     private Transform minimapIcon;
 
+    [SerializeField]
+    private GameObject[] skillPrefab;
+
     
 
     private Vector3 destination;
@@ -69,6 +77,9 @@ public class Player : Character
 
     [SerializeField]
     private Astar aStar;
+
+    [SerializeField]
+    private FixedJoystick JoyStick;
 
     public int MyGold { get; set; }
 
@@ -83,10 +94,12 @@ public class Player : Character
 
     public List<Enemy> MyAttackers { get => attackers; set => attackers = value; }
 
+    float axis;
+
     protected override void Update()
     {
         GetInput();
-        ClickToMove();
+        //ClickToMove();
 
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, min.x, max.x), Mathf.Clamp(transform.position.y, min.y, max.y), transform.position.z);
 
@@ -116,8 +129,59 @@ public class Player : Character
 
     public void GetInput()
     {
-        Direction = Vector2.zero;
+        direction = Vector2.zero;
 
+        direction.x = JoyStick.Horizontal;
+        direction.y = JoyStick.Vertical;
+
+
+        // if(Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+        //  {
+        //  direction.y = 0;
+        if (direction.x > 0)
+        {
+            Debug.Log("right");
+            exitIndex = 1;
+            
+            if (direction.y == 0)
+            {
+             //   minimapIndicator.eulerAngles = new Vector3(0, 0, 270);
+            }
+        }
+
+        if (direction.x < 0)
+        {
+            Debug.Log("left");
+            exitIndex = 3;
+            if (direction.y == 0)
+            {
+              //  minimapIndicator.eulerAngles = new Vector3(0, 0, 90);
+            }
+
+        }
+        // }
+        //  else
+        //  {
+       // direction.x = 0;
+
+        if (direction.y > 0)
+        {
+            Debug.Log("up");
+            exitIndex = 0;
+            
+            //  minimapIndicator.eulerAngles = new Vector3(0, 0, 0);
+
+        }
+
+        if (direction.y < 0)
+        {
+            Debug.Log("down");
+            exitIndex = 2;
+          //  minimapIndicator.eulerAngles = new Vector3(0, 0, 180);
+
+
+        }
+        //  } 
 
         if (Input.GetKeyDown(KeyCode.X))
         {
@@ -163,8 +227,9 @@ public class Player : Character
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            StartCoroutine(AttackSword());
+            StartCoroutine(ThirdSkill());
         }
+        
 
 
         if (Input.GetKey(KeybindManager.MyInstance.Keybinds["RIGHTB"]))
@@ -320,54 +385,54 @@ public class Player : Character
 
     }
 
-    public void ClickToMove()
-    {
-        if(MyPath != null)
-        {
-            transform.parent.position = Vector2.MoveTowards(transform.parent.position, destination, 2 * Time.deltaTime);
+    //public void ClickToMove()
+    //{
+    //    if(MyPath != null)
+    //    {
+    //        transform.parent.position = Vector2.MoveTowards(transform.parent.position, destination, 2 * Time.deltaTime);
 
-            Vector3Int dest = aStar.MyTilemap.WorldToCell(destination);
-            Vector3Int cur = aStar.MyTilemap.WorldToCell(current);
+    //        Vector3Int dest = aStar.MyTilemap.WorldToCell(destination);
+    //        Vector3Int cur = aStar.MyTilemap.WorldToCell(current);
 
            
 
-            float distance = Vector2.Distance(destination, transform.parent.position);
+    //        float distance = Vector2.Distance(destination, transform.parent.position);
 
-            if(cur.y > dest.y)
-            {
-                Direction = Vector2.down;
-            }
-            else if(cur.y < dest.y)
-            {
-                Direction = Vector2.up;
-            }
-            if(cur.y == dest.y)
-            {
-                if(cur.x > dest.x)
-                {
-                    Direction = Vector2.left;
-                }
-                else if(cur.x < dest.x)
-                {
-                    Direction = Vector2.right;
-                }
-            }
+    //        if(cur.y > dest.y)
+    //        {
+    //            Direction = Vector2.down;
+    //        }
+    //        else if(cur.y < dest.y)
+    //        {
+    //            Direction = Vector2.up;
+    //        }
+    //        if(cur.y == dest.y)
+    //        {
+    //            if(cur.x > dest.x)
+    //            {
+    //                Direction = Vector2.left;
+    //            }
+    //            else if(cur.x < dest.x)
+    //            {
+    //                Direction = Vector2.right;
+    //            }
+    //        }
 
 
-            if(distance <= 0f)
-            {
-                if(MyPath.Count > 0)
-                {
-                    current = destination;
-                    destination = MyPath.Pop();
-                }
-                else
-                {
-                    MyPath = null;
-                }
-            }
-        }
-    }
+    //        if(distance <= 0f)
+    //        {
+    //            if(MyPath.Count > 0)
+    //            {
+    //                current = destination;
+    //                destination = MyPath.Pop();
+    //            }
+    //            else
+    //            {
+    //                MyPath = null;
+    //            }
+    //        }
+    //    }
+    //}
 
    
     public void CastSpell(ICastable castable)
@@ -481,7 +546,88 @@ public class Player : Character
     }
 
 
+    private IEnumerator FirstSkill()
+    {
+        if (!isUsingFirstSkill)
+        {
+            isUsingFirstSkill = true;
+            MyAnimator.SetBool("FSattack", isUsingFirstSkill);
 
-   
+
+
+            yield return new WaitForSeconds(1);
+
+            CastFirstSkill();
+
+            StopFirstSkill();
+        }
+
+       
+    }
+
+    private IEnumerator SecondSkill()
+    {
+        if (!isUsingSecondSkill)
+        {
+            isUsingSecondSkill = true;
+            MyAnimator.SetBool("SSattack", isUsingSecondSkill);
+
+
+
+            yield return new WaitForSeconds(2);
+
+            CastSecondSkill();
+
+            StopSecondSkill();
+        }
+
+
+    }
+
+    private IEnumerator ThirdSkill()
+    {
+        if (!isUsingThidSkill)
+        {
+            isUsingThidSkill = true;
+            MyAnimator.SetBool("TSattack", isUsingThidSkill);
+
+            yield return new WaitForSeconds(2);
+
+            CastThirdSkill();
+
+            StopThirdSkill();
+        }
+
+
+    }
+
+
+    public void CastFirstSkill()
+    {
+        Vector2 temp = new Vector2(MyAnimator.GetFloat("x"), MyAnimator.GetFloat("y"));
+        
+        FirstSkill firstSkill =  Instantiate(skillPrefab[0], transform.position, Quaternion.identity).GetComponent<FirstSkill>();
+        firstSkill.SetUp(temp, ChooseFirstSkillDirection());           
+    }
+    public void CastSecondSkill()
+    {
+        Vector2 temp = new Vector2(MyAnimator.GetFloat("x"), MyAnimator.GetFloat("y"));
+        SecondSkill secondtSkill = Instantiate(skillPrefab[1], transform.position, Quaternion.identity).GetComponent<SecondSkill>();
+        secondtSkill.SetUp(temp, ChooseFirstSkillDirection());
+    }
+
+    public void CastThirdSkill()
+    {
+        Vector2 temp = new Vector2(MyAnimator.GetFloat("x"), MyAnimator.GetFloat("y"));
+        ThirdSkill thirdSkill = Instantiate(skillPrefab[2], transform.position, Quaternion.identity).GetComponent<ThirdSkill>();
+        thirdSkill.SetUp(temp, ChooseFirstSkillDirection());
+    }
+
+    public Vector3 ChooseFirstSkillDirection()
+    {
+        float temp = Mathf.Atan2(MyAnimator.GetFloat("y"),MyAnimator.GetFloat("x")) * Mathf.Rad2Deg;
+        return new Vector3(0, 0, temp);
+    }
+
 
 }

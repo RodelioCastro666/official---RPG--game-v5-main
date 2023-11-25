@@ -13,7 +13,7 @@ public class Character : MonoBehaviour
     [SerializeField]
     private string type;
 
-    private Vector2 direction;
+    protected Vector2 direction;
 
     [SerializeField]
     private int level;
@@ -34,7 +34,11 @@ public class Character : MonoBehaviour
 
     public bool IsAttacking { get; set; }
 
-    
+    protected bool isUsingFirstSkill = false;
+
+    protected bool isUsingSecondSkill = false;
+
+    protected bool isUsingThidSkill = false;
 
     protected Coroutine actionRoutine;
 
@@ -103,16 +107,17 @@ public class Character : MonoBehaviour
         HandleLayers();
     }
 
-    public void Move()
+    public virtual void Move()
     {
-        if (MyPath == null)
+        if (IsAlive)
         {
-            if (IsAlive)
+            myRigidbody.velocity = Direction.normalized * Speed;
+
+            if (myRigidbody.velocity.magnitude > 1f)
             {
-                MyRigidbody.velocity = Direction.normalized * Speed;
+                myRigidbody.velocity.Normalize();
             }
         }
-
     }
 
 
@@ -134,6 +139,21 @@ public class Character : MonoBehaviour
                 direction = Vector2.zero;
                 
             }
+            else if (isUsingFirstSkill)
+            {
+                ActivateLayer("FirstSkill");
+                direction = Vector2.zero;
+            }
+            else if (isUsingSecondSkill)
+            {
+                ActivateLayer("SecondSkill");
+                direction = Vector2.zero;
+            }
+            else if (isUsingThidSkill)
+            {
+                ActivateLayer("ThirdSkill");
+                direction = Vector2.zero;
+            }
             else if (IsMoving)
             {
 
@@ -142,9 +162,9 @@ public class Character : MonoBehaviour
 
                 MyAnimator.SetFloat("x", Direction.x);
                 MyAnimator.SetFloat("y", Direction.y);
+
+
                
-
-
             }
             
             else
@@ -202,5 +222,21 @@ public class Character : MonoBehaviour
 
            
         }
+    }
+
+    public void StopFirstSkill()
+    {
+        isUsingFirstSkill = false;
+        MyAnimator.SetBool("FSattack", isUsingFirstSkill);
+    }
+    public void StopSecondSkill()
+    {
+        isUsingSecondSkill = false;
+        MyAnimator.SetBool("SSattack", isUsingSecondSkill);
+    }
+    public void StopThirdSkill()
+    {
+        isUsingThidSkill = false;
+        MyAnimator.SetBool("TSattack", isUsingThidSkill);
     }
 }
