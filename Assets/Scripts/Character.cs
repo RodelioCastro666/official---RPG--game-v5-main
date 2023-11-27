@@ -13,7 +13,7 @@ public class Character : MonoBehaviour
     [SerializeField]
     private string type;
 
-    protected Vector2 direction;
+    protected Vector3 direction;
 
     [SerializeField]
     private int level;
@@ -39,6 +39,8 @@ public class Character : MonoBehaviour
     protected bool isUsingSecondSkill = false;
 
     protected bool isUsingThidSkill = false;
+
+    protected bool isUsingNormalSkill = false;
 
     protected Coroutine actionRoutine;
 
@@ -88,22 +90,18 @@ public class Character : MonoBehaviour
 
     protected virtual void Start()
     {
-       
-
-       
 
         MyAnimator = GetComponent<Animator>();
         MySpriteRenderer = GetComponent<SpriteRenderer>();
         
     }
 
-    public void FixedUpdate()
-    {
-        Move();
-    }
+      
+    
 
     protected virtual void Update()
     {
+        Move();
         HandleLayers();
     }
 
@@ -152,6 +150,11 @@ public class Character : MonoBehaviour
             else if (isUsingThidSkill)
             {
                 ActivateLayer("ThirdSkill");
+                direction = Vector2.zero;
+            }
+            else if (isUsingNormalSkill)
+            {
+                ActivateLayer("NormalAttack");
                 direction = Vector2.zero;
             }
             else if (IsMoving)
@@ -224,19 +227,5 @@ public class Character : MonoBehaviour
         }
     }
 
-    public void StopFirstSkill()
-    {
-        isUsingFirstSkill = false;
-        MyAnimator.SetBool("FSattack", isUsingFirstSkill);
-    }
-    public void StopSecondSkill()
-    {
-        isUsingSecondSkill = false;
-        MyAnimator.SetBool("SSattack", isUsingSecondSkill);
-    }
-    public void StopThirdSkill()
-    {
-        isUsingThidSkill = false;
-        MyAnimator.SetBool("TSattack", isUsingThidSkill);
-    }
+  
 }

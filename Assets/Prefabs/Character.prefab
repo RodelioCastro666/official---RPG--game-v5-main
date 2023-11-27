@@ -398,7 +398,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6079357567772849100}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.537, y: -0.04, z: 0}
+  m_LocalPosition: {x: -2, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -429,7 +429,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6079357568102026368}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.212, y: -0.545, z: 0}
+  m_LocalPosition: {x: 0, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -606,7 +606,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6079357568265167979}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.146, y: 0.424, z: 0}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -848,7 +848,8 @@ GameObject:
   - component: {fileID: 6079357569136266307}
   - component: {fileID: 6079357569136266304}
   - component: {fileID: 6079357569136266317}
-  - component: {fileID: 2026519570}
+  - component: {fileID: 997388633}
+  - component: {fileID: 997388634}
   m_Layer: 0
   m_Name: Character
   m_TagString: Player
@@ -944,9 +945,9 @@ MonoBehaviour:
   speed: 5
   type: 
   level: 1
-  myRigidbody: {fileID: 0}
-  initHealth: 100
-  hitBox: {fileID: 0}
+  myRigidbody: {fileID: 997388633}
+  initHealth: 10
+  hitBox: {fileID: 1386669748}
   health: {fileID: 0}
   mana: {fileID: 0}
   xpStat: {fileID: 0}
@@ -956,6 +957,7 @@ MonoBehaviour:
   - {fileID: 6079357569186439871}
   - {fileID: 6079357568102026383}
   - {fileID: 6079357567772849099}
+  firePoint: {fileID: 0}
   blocks:
   - first: {fileID: 6079357568481502751}
     second: {fileID: 6079357568185689166}
@@ -968,7 +970,8 @@ MonoBehaviour:
   ding: {fileID: 727481527}
   profession: {fileID: 0}
   minimapIcon: {fileID: 1089008666}
-  aStar: {fileID: 2026519570}
+  aStar: {fileID: 0}
+  JoyStick: {fileID: 0}
 --- !u!95 &6079357569136266304
 Animator:
   serializedVersion: 5
@@ -1000,7 +1003,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.34}
@@ -1016,7 +1019,28 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.36, y: 0.09}
   m_EdgeRadius: 0
---- !u!114 &2026519570
+--- !u!50 &997388633
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6079357569136266308}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 4
+--- !u!114 &997388634
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1025,10 +1049,38 @@ MonoBehaviour:
   m_GameObject: {fileID: 6079357569136266308}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3287891f5630a742922b82d62ec94e2, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f41f72bbe45daa4187c75f57d984b5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilemap: {fileID: 0}
+  skills:
+  - name: FirstSkill
+    damage: 10
+    icon: {fileID: 21300000, guid: 3c8a1d9751deaf34896fca0dafc19655, type: 3}
+    speed: 0
+    castTime: 1
+    skillPrefab: {fileID: 187146214181035190, guid: 3c55cccbd3e4117499ede08bc291d7d4, type: 3}
+    barColor: {r: 0.8301887, g: 0.35557136, b: 0.35557136, a: 1}
+  - name: SecondSkill
+    damage: 10
+    icon: {fileID: 21300000, guid: db0625e3882486a47b7660c815bc56d0, type: 3}
+    speed: 0
+    castTime: 1
+    skillPrefab: {fileID: 7828775879503533797, guid: 5c578f414f6f3e345b08980a7e2e14be, type: 3}
+    barColor: {r: 0.7068927, g: 0.46094695, b: 0.7830189, a: 1}
+  - name: ThirdSkill
+    damage: 10
+    icon: {fileID: 21300000, guid: 7df35c098def6a141a24b896ff33da62, type: 3}
+    speed: 0
+    castTime: 1
+    skillPrefab: {fileID: 7414353142807445877, guid: f2ced342af5ae354599bde60636249a7, type: 3}
+    barColor: {r: 0.7169812, g: 0.31384832, b: 0.31384832, a: 1}
+  - name: NormalAttack
+    damage: 10
+    icon: {fileID: 21300000, guid: 5293505090963ea489601446acf51b86, type: 3}
+    speed: 0
+    castTime: 1
+    skillPrefab: {fileID: 1984908665614649981, guid: 0047c1d575d8d394ea26683a0016216a, type: 3}
+    barColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!1 &6079357569161181984
 GameObject:
   m_ObjectHideFlags: 0
@@ -1088,7 +1140,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6079357569186439856}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.374, y: -0.008, z: 0}
+  m_LocalPosition: {x: 2, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

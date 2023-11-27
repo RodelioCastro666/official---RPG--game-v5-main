@@ -64,8 +64,7 @@ public class Player : Character
     [SerializeField]
     private Transform minimapIcon;
 
-    [SerializeField]
-    private GameObject[] skillPrefab;
+    
 
     
 
@@ -75,11 +74,13 @@ public class Player : Character
 
     private Vector3 goal;
 
-    [SerializeField]
-    private Astar aStar;
+    
 
     [SerializeField]
     private FixedJoystick JoyStick;
+
+    
+    private SkillBook skillBook;
 
     public int MyGold { get; set; }
 
@@ -94,7 +95,13 @@ public class Player : Character
 
     public List<Enemy> MyAttackers { get => attackers; set => attackers = value; }
 
-    float axis;
+    private bool isDashing = false;
+
+    protected override void Start()
+    {
+        base.Start();
+        skillBook = GetComponent<SkillBook>();
+    }
 
     protected override void Update()
     {
@@ -134,7 +141,7 @@ public class Player : Character
         direction.x = JoyStick.Horizontal;
         direction.y = JoyStick.Vertical;
 
-
+       
         // if(Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
         //  {
         //  direction.y = 0;
@@ -227,7 +234,7 @@ public class Player : Character
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            StartCoroutine(ThirdSkill());
+            isDashing = true;
         }
         
 
@@ -258,6 +265,21 @@ public class Player : Character
         }
 
 
+    }
+
+    private void  FixedUpdate()
+    {
+        MyRigidbody.velocity = direction * Speed;
+
+        if (isDashing)
+        {
+            float dashAmount = 3f;
+            Vector3 dashPosition = transform.position + direction * dashAmount ;
+
+            DashEffect.CreateDashEffect(transform.position, direction, Vector3.Distance(transform.position, dashPosition));
+            MyRigidbody.MovePosition(dashPosition);
+            isDashing = false;
+        }
     }
 
     public void AddAttackers(Enemy enemy)
@@ -362,13 +384,7 @@ public class Player : Character
         StopAction();
     }
 
-    public void GetPath(Vector3 goal)
-    {
-        MyPath = aStar.Algorithm(transform.position, goal);
-        current = MyPath.Pop();
-        destination = MyPath.Pop();
-        this.goal = goal;
-    }
+    
 
     private IEnumerator AttackSword()
     {
@@ -548,6 +564,8 @@ public class Player : Character
 
     private IEnumerator FirstSkill()
     {
+        Skill skill = skillBook.CastSkill(0);
+
         if (!isUsingFirstSkill)
         {
             isUsingFirstSkill = true;
@@ -555,9 +573,12 @@ public class Player : Character
 
 
 
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(skill.MyCastTime);
 
-            CastFirstSkill();
+            Vector2 temp = new Vector2(MyAnimator.GetFloat("x"), MyAnimator.GetFloat("y"));
+
+            FirstSkill firstSkill = Instantiate(skill.MySkillPrefab, transform.position, Quaternion.identity).GetComponent<FirstSkill>();
+            firstSkill.SetUp(temp, ChooseFirstSkillDirection());
 
             StopFirstSkill();
         }
@@ -567,6 +588,8 @@ public class Player : Character
 
     private IEnumerator SecondSkill()
     {
+        Skill skill = skillBook.CastSkill(1);
+
         if (!isUsingSecondSkill)
         {
             isUsingSecondSkill = true;
@@ -574,9 +597,11 @@ public class Player : Character
 
 
 
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(skill.MyCastTime);
 
-            CastSecondSkill();
+            Vector2 temp = new Vector2(MyAnimator.GetFloat("x"), MyAnimator.GetFloat("y"));
+            SecondSkill secondtSkill = Instantiate(skill.MySkillPrefab, transform.position, Quaternion.identity).GetComponent<SecondSkill>();
+            secondtSkill.SetUp(temp, ChooseFirstSkillDirection());
 
             StopSecondSkill();
         }
@@ -586,14 +611,18 @@ public class Player : Character
 
     private IEnumerator ThirdSkill()
     {
+        Skill skill = skillBook.CastSkill(2);
+
         if (!isUsingThidSkill)
         {
             isUsingThidSkill = true;
             MyAnimator.SetBool("TSattack", isUsingThidSkill);
 
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(skill.MyCastTime);
 
-            CastThirdSkill();
+            Vector2 temp = new Vector2(MyAnimator.GetFloat("x"), MyAnimator.GetFloat("y"));
+            ThirdSkill thirdSkill = Instantiate(skill.MySkillPrefab, transform.position, Quaternion.identity).GetComponent<ThirdSkill>();
+            thirdSkill.SetUp(temp, ChooseFirstSkillDirection());
 
             StopThirdSkill();
         }
@@ -601,26 +630,25 @@ public class Player : Character
 
     }
 
+    private IEnumerator NormalSkill()
+    {
+        Skill skill = skillBook.CastSkill(3);
 
-    public void CastFirstSkill()
-    {
-        Vector2 temp = new Vector2(MyAnimator.GetFloat("x"), MyAnimator.GetFloat("y"));
-        
-        FirstSkill firstSkill =  Instantiate(skillPrefab[0], transform.position, Quaternion.identity).GetComponent<FirstSkill>();
-        firstSkill.SetUp(temp, ChooseFirstSkillDirection());           
-    }
-    public void CastSecondSkill()
-    {
-        Vector2 temp = new Vector2(MyAnimator.GetFloat("x"), MyAnimator.GetFloat("y"));
-        SecondSkill secondtSkill = Instantiate(skillPrefab[1], transform.position, Quaternion.identity).GetComponent<SecondSkill>();
-        secondtSkill.SetUp(temp, ChooseFirstSkillDirection());
-    }
+        if (!isUsingNormalSkill)
+        {
+            isUsingNormalSkill = true;
+            MyAnimator.SetBool("Nattack", isUsingNormalSkill);
 
-    public void CastThirdSkill()
-    {
-        Vector2 temp = new Vector2(MyAnimator.GetFloat("x"), MyAnimator.GetFloat("y"));
-        ThirdSkill thirdSkill = Instantiate(skillPrefab[2], transform.position, Quaternion.identity).GetComponent<ThirdSkill>();
-        thirdSkill.SetUp(temp, ChooseFirstSkillDirection());
+            yield return new WaitForSeconds(skill.MyCastTime);
+
+            Vector2 temp = new Vector2(MyAnimator.GetFloat("x"), MyAnimator.GetFloat("y"));
+            NormalAttack normalAttack = Instantiate(skill.MySkillPrefab, transform.position, Quaternion.identity).GetComponent<NormalAttack>();
+            normalAttack.SetUp(temp, ChooseFirstSkillDirection());
+
+            StopNormalSkill();
+        }
+
+
     }
 
     public Vector3 ChooseFirstSkillDirection()
@@ -629,5 +657,34 @@ public class Player : Character
         return new Vector3(0, 0, temp);
     }
 
+    protected virtual void StopFirstSkill()
+    {
+        skillBook.StopSkill();
 
+        isUsingFirstSkill = false;
+        MyAnimator.SetBool("FSattack", isUsingFirstSkill);
+    }
+    protected virtual void StopSecondSkill()
+    {
+        skillBook.StopSkill();
+        isUsingSecondSkill = false;
+        MyAnimator.SetBool("SSattack", isUsingSecondSkill);
+    }
+    protected virtual void StopThirdSkill()
+    {
+        skillBook.StopSkill();
+        isUsingThidSkill = false;
+        MyAnimator.SetBool("TSattack", isUsingThidSkill);
+    }
+    protected virtual void StopNormalSkill()
+    {
+        skillBook.StopSkill();
+        isUsingNormalSkill = false;
+        MyAnimator.SetBool("Nattack", isUsingNormalSkill);
+    }
+
+    public void Dash()
+    {
+        isDashing = true;
+    }
 }

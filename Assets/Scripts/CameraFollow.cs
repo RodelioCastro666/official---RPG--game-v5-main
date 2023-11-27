@@ -38,7 +38,7 @@ public class CameraFollow : MonoBehaviour
     private void LateUpdate()
     {
         transform.position = new Vector3(Mathf.Clamp(target.position.x, xMin, xMax), 
-           Mathf.Clamp(target.position.y, yMin, yMax), -10);
+           Mathf.Clamp(target.position.y, yMin, yMax), -20);
 
         //if (transform.position != target.position)
         //{

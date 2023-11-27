@@ -9,15 +9,21 @@ public class FirstSkill : MonoBehaviour
 
     private BoxCollider2D boxCollider;
 
+    
+
+    
+
+    private Transform source;
+
     [SerializeField]
     private Rigidbody2D myrigidbody;
 
     // Start is called before the first frame update
     void Awake()
     {
-        //anim = GetComponent<Animator>();
-        //boxCollider = GetComponent<BoxCollider2D>();
-        //myrigidbody = GetComponent<Rigidbody2D>();
+       
+        // boxCollider = GetComponent<BoxCollider2D>();
+        myrigidbody = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -28,9 +34,9 @@ public class FirstSkill : MonoBehaviour
         //transform.Translate(movementSpeed, 0, 0);
     }
 
-    
-    
 
+    
+   
     public void SetUp(Vector2 velocity, Vector3 direction)
     {
         myrigidbody.velocity = velocity.normalized * speed;

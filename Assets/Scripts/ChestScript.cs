@@ -8,6 +8,6 @@ public class ChestScript : BagScript
 
     private void Awake()
     {
-        AddSlots(12);
+        AddSlots(16);
     }
 }

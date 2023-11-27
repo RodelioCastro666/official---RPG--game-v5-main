@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5779244352816334750}
   - component: {fileID: 5779244352816334751}
-  - component: {fileID: 5779244352816334748}
   - component: {fileID: -6298508943611263095}
   m_Layer: 5
   m_Name: Inventory
@@ -47,30 +46,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5779244352816334817}
   m_CullTransparentMesh: 1
---- !u!114 &5779244352816334748
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5779244352816334817}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 8
-  m_StartCorner: 3
-  m_StartAxis: 0
-  m_CellSize: {x: 250, y: 250}
-  m_Spacing: {x: -14.27, y: 0}
-  m_Constraint: 1
-  m_ConstraintCount: 3
 --- !u!114 &-6298508943611263095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -101,3 +76,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bb832dd4d3ac1fd4d9c21091baebd17b, type: 2}
   - {fileID: 11400000, guid: a5111c388c554dc4da79d3ef79745f83, type: 2}
   - {fileID: 11400000, guid: 6887c982ca4d3934a95b85eeac8497fb, type: 2}
+  - {fileID: 11400000, guid: 7e226e84dfa639c4cb23d4777410441a, type: 2}
+  - {fileID: 11400000, guid: 39979f9cc115a6841b712c59e8909e39, type: 2}

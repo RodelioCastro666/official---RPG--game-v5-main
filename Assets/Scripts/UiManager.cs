@@ -70,13 +70,7 @@ public class UiManager : MonoBehaviour
 
     void Start()
     {
-       
-
-       
-
-        healthStat = targetFrame.GetComponentInChildren<Stat>();
-
-       
+        healthStat = targetFrame.GetComponentInChildren<Stat>();  
     }
 
     // Update is called once per frame
@@ -130,7 +124,36 @@ public class UiManager : MonoBehaviour
 
     }
 
+    public void OpenQuest()
+    {
+        OpenClose(menus[3]);
+    }
+    public void OpenMainMenu()
+    {
+        OpenClose(menus[0]);
+    }
 
+    public void CharOpen()
+    {
+        OpenClose(menus[2]);
+    }
+
+    public void OpenInventory()
+    {
+        OpenClose(menus[7]);
+    }
+    public void OpenCrafting()
+    {
+        OpenClose(menus[6]);
+    }
+    public void OpenSaveGame()
+    {
+        OpenClose(menus[5]);
+    }
+    public void OpenSpellBook()
+    {
+        OpenClose(menus[1]);
+    }
 
     public void ShowTargetFrame(Enemy target)
     {

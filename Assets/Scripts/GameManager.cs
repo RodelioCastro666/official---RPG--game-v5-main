@@ -51,9 +51,30 @@ public class GameManager : MonoBehaviour
 
     private void ClickTarget()
     {
-       
+        for (int i = 0; i < Input.touchCount; i++)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(mainCamera.ScreenToWorldPoint(Input.touches[i].position), Vector3.zero, Mathf.Infinity, clickableLayer);
 
-        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() )
+            if (hit.collider != null)
+            {
+                IInteractable entity = hit.collider.gameObject.GetComponent<IInteractable>();
+
+                if (hit.collider != null && (hit.collider.tag == "Enemy" || hit.collider.tag == "Interactable") && player.MyInteractables.Contains(entity))
+                {
+                    entity.Interact();
+
+
+                }
+
+
+            }
+            
+
+        }
+
+
+
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
             Debug.Log("HEloooo");
 
@@ -65,46 +86,75 @@ public class GameManager : MonoBehaviour
 
                 SelectTarget(hit.collider.GetComponent<Enemy>());
             }
-            
+
             else
             {
                 UiManager.MyInstance.HideTargetFrame();
 
                 DeselectTarget();
-               
+
                 currentTarget = null;
                 player.MyTarget = null;
             }
         }
 
-        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
-        {
-            RaycastHit2D hit = Physics2D.Raycast(mainCamera.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, clickableLayer);
+        //if (Input.touchCount > 0 && !EventSystem.current.IsPointerOverGameObject())
+        //{
 
-            if(hit.collider != null)
-            {
-                IInteractable entity = hit.collider.gameObject.GetComponent<IInteractable>();
-                if (hit.collider != null && (hit.collider.tag == "Enemy" || hit.collider.tag == "Interactable") && player.MyInteractables.Contains(entity))
-                {
-                    entity.Interact();
+        //    Touch touch = Input.GetTouch(0);
+        //    RaycastHit2D hit = Physics2D.Raycast(mainCamera.ScreenToWorldPoint(touch.position), Vector2.zero, Mathf.Infinity, clickableLayer);
 
-                }
-               
-            }
-            //else
-            //{
-            //    hit = Physics2D.Raycast(mainCamera.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, groundLayer);
+        //    if (hit.collider != null)
+        //    {
+        //        IInteractable entity = hit.collider.gameObject.GetComponent<IInteractable>();
 
-            //    if (hit.collider != null)
-            //    {
-            //        player.GetPath(mainCamera.ScreenToWorldPoint(Input.mousePosition));
-            //    }
+        //        if (hit.collider != null && (hit.collider.tag == "Enemy" || hit.collider.tag == "Interactable") && player.MyInteractables.Contains(entity))
+        //        {
+        //            entity.Interact();
+        //            //  indicateW.SetActive(true);
 
-                
-            //}
+        //        }
+        //        else
+        //        {
+        //            hit = Physics2D.Raycast(mainCamera.ScreenToWorldPoint(touch.position), Vector2.zero, Mathf.Infinity, groundLayer);
+
+        //            if (hit.collider != null)
+        //            {
+        //                player.GetPath(mainCamera.ScreenToWorldPoint(touch.position));
+        //            }
+        //        }
+
+        //    }
+        //}
+
+        //    if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+        //{
+        //    RaycastHit2D hit = Physics2D.Raycast(mainCamera.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, clickableLayer);
+
+        //    if(hit.collider != null)
+        //    {
+        //        IInteractable entity = hit.collider.gameObject.GetComponent<IInteractable>();
+        //        if (hit.collider != null && (hit.collider.tag == "Enemy" || hit.collider.tag == "Interactable") && player.MyInteractables.Contains(entity))
+        //        {
+        //            entity.Interact();
+
+        //        }
+
+        //    }
+        //else
+        //{
+        //    hit = Physics2D.Raycast(mainCamera.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, groundLayer);
+
+        //    if (hit.collider != null)
+        //    {
+        //        player.GetPath(mainCamera.ScreenToWorldPoint(Input.mousePosition));
+        //    }
 
 
-        }
+        //}
+
+
+        // }
 
         //else if (Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject())
         //{
