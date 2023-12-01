@@ -8,7 +8,7 @@ public class DashEffect : MonoBehaviour {
     public static void CreateDashEffect(Vector3 position, Vector3 dir, float dashSize) {
         Transform dashTransform = Instantiate(GameAssets.i.pfDashEffect, position, Quaternion.identity);
         dashTransform.localEulerAngles = new Vector3(0, 0, UtilsClass.GetAngleFromVectorFloat(dir));
-        dashTransform.localScale = new Vector3(dashSize / 7f, 0.5f, 1);
+        dashTransform.localScale = new Vector3(dashSize / 6f, 0.5f, 1);
     }
 
 }

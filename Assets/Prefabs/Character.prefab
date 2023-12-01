@@ -920,7 +920,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 20
   m_Sprite: {fileID: 921507442, guid: 85d7410864ea75745b6d38f573cfac41, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7735849, g: 0.7735849, b: 0.7735849, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -942,11 +942,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a8960eff0a07864f95d6b77e4354e7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 3
   type: 
   level: 1
   myRigidbody: {fileID: 997388633}
-  initHealth: 10
+  initHealth: 100
   hitBox: {fileID: 1386669748}
   health: {fileID: 0}
   mana: {fileID: 0}
@@ -970,7 +970,6 @@ MonoBehaviour:
   ding: {fileID: 727481527}
   profession: {fileID: 0}
   minimapIcon: {fileID: 1089008666}
-  aStar: {fileID: 0}
   JoyStick: {fileID: 0}
 --- !u!95 &6079357569136266304
 Animator:
@@ -1006,7 +1005,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.34}
+  m_Offset: {x: 0, y: -0.2526518}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1017,7 +1016,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.36, y: 0.09}
+  m_Size: {x: 0.36, y: 0.26469636}
   m_EdgeRadius: 0
 --- !u!50 &997388633
 Rigidbody2D:
@@ -1052,35 +1051,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f41f72bbe45daa4187c75f57d984b5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  castingBar: {fileID: 0}
+  spellName: {fileID: 0}
+  castTime: {fileID: 0}
+  icon: {fileID: 0}
   skills:
   - name: FirstSkill
     damage: 10
     icon: {fileID: 21300000, guid: 3c8a1d9751deaf34896fca0dafc19655, type: 3}
-    speed: 0
-    castTime: 1
+    speed: 1
+    castTime: 0.4
     skillPrefab: {fileID: 187146214181035190, guid: 3c55cccbd3e4117499ede08bc291d7d4, type: 3}
     barColor: {r: 0.8301887, g: 0.35557136, b: 0.35557136, a: 1}
+    manaCost: 10
   - name: SecondSkill
     damage: 10
     icon: {fileID: 21300000, guid: db0625e3882486a47b7660c815bc56d0, type: 3}
-    speed: 0
-    castTime: 1
+    speed: 1
+    castTime: 1.2
     skillPrefab: {fileID: 7828775879503533797, guid: 5c578f414f6f3e345b08980a7e2e14be, type: 3}
     barColor: {r: 0.7068927, g: 0.46094695, b: 0.7830189, a: 1}
+    manaCost: 0
   - name: ThirdSkill
     damage: 10
     icon: {fileID: 21300000, guid: 7df35c098def6a141a24b896ff33da62, type: 3}
-    speed: 0
-    castTime: 1
+    speed: 1
+    castTime: 0.3
     skillPrefab: {fileID: 7414353142807445877, guid: f2ced342af5ae354599bde60636249a7, type: 3}
     barColor: {r: 0.7169812, g: 0.31384832, b: 0.31384832, a: 1}
-  - name: NormalAttack
+    manaCost: 0
+  - name: NormalSkill
     damage: 10
-    icon: {fileID: 21300000, guid: 5293505090963ea489601446acf51b86, type: 3}
-    speed: 0
+    icon: {fileID: 21300000, guid: 7df35c098def6a141a24b896ff33da62, type: 3}
+    speed: 1
     castTime: 1
     skillPrefab: {fileID: 1984908665614649981, guid: 0047c1d575d8d394ea26683a0016216a, type: 3}
-    barColor: {r: 0, g: 0, b: 0, a: 1}
+    barColor: {r: 0.3137255, g: 0.7176471, b: 0.46154103, a: 1}
+    manaCost: 0
+  canvasGroup: {fileID: 0}
 --- !u!1 &6079357569161181984
 GameObject:
   m_ObjectHideFlags: 0

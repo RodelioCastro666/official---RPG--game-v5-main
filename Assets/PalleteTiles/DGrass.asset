@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79151b3fb4812ce4696b351ba3e5099b, type: 3}
+  m_Name: DGrass
+  m_EditorClassIdentifier: 
+  m_Sprite: {fileID: 835262429, guid: 2f9818923a9c3fa45a3d02a7d5dd7372, type: 3}
+  m_Color: {r: 0.7075472, g: 0.33641866, b: 0.33641866, a: 1}
+  m_Transform:
+    e00: 1
+    e01: 0
+    e02: 0
+    e03: 0
+    e10: 0
+    e11: 1
+    e12: 0
+    e13: 0
+    e20: 0
+    e21: 0
+    e22: 1
+    e23: 0
+    e30: 0
+    e31: 0
+    e32: 0
+    e33: 1
+  m_InstancedGameObject: {fileID: 346007473651385418, guid: 02a65b9d63da314469929973d6947d97, type: 3}
+  m_Flags: 1
+  m_ColliderType: 1

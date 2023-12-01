@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1018988322161483992}
   - component: {fileID: 2516561099766131149}
   - component: {fileID: 3416766138278924701}
+  - component: {fileID: 1658745108}
   m_Layer: 0
   m_Name: NormalAttack
   m_TagString: Untagged
@@ -77,7 +78,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 1078765544, guid: 5709e4bbe0bfbd7448ac68b567010c5f, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.16862746}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -148,3 +149,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1
   myrigidbody: {fileID: 1018988322161483992}
+--- !u!95 &1658745108
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1984908665614649981}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8073f8d16ea0a44448ceec0d7c0ea9ec, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

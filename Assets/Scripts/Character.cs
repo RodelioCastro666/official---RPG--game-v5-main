@@ -44,11 +44,15 @@ public class Character : MonoBehaviour
 
     protected Coroutine actionRoutine;
 
+    public List<Character> Attackers { get; set; } = new List<Character>();
+
     [SerializeField]
-    private Transform hitBox;
+    protected Transform hitBox;
 
     [SerializeField]
     protected Stat health;
+
+    
 
     public bool IsAlive
     {
@@ -140,7 +144,7 @@ public class Character : MonoBehaviour
             else if (isUsingFirstSkill)
             {
                 ActivateLayer("FirstSkill");
-                direction = Vector2.zero;
+                
             }
             else if (isUsingSecondSkill)
             {
@@ -226,6 +230,34 @@ public class Character : MonoBehaviour
            
         }
     }
+    public virtual void TakeDamage(float damage)
+    {
 
-  
+
+        health.MyCurrentValue -= damage;
+        CombatTextManager.MyInstance.CreateText(transform.position, damage.ToString(), SCTTYPE.DAMAGE, false);
+        if (health.MyCurrentValue <= 0)
+        {
+
+            Direction = Vector2.zero;
+            MyRigidbody.velocity = Direction;
+            GameManager.MyInstance.OnKillConfirmed(this);
+            MyAnimator.SetTrigger("die");
+
+
+        }
+    }
+
+    public virtual void AddAttacker(Character attacker)
+    {
+        if (!Attackers.Contains(attacker))
+        {
+            Attackers.Add(attacker);
+        }
+    }
+
+    public virtual void RemoveAttacker(Character attacker)
+    {
+        Attackers.Remove(attacker);
+    }
 }

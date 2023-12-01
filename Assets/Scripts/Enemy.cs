@@ -29,7 +29,7 @@ public class Enemy : Character, IInteractable
     private LayerMask losMask;
 
     [SerializeField]
-    private int damage;
+    protected int damage;
 
     private bool canDoDamage = true;
 
@@ -140,7 +140,7 @@ public class Enemy : Character, IInteractable
 
                 if (!IsAlive)
                 {
-                    Player.MyInstance.MyAttackers.Remove(this);
+                    source.RemoveAttacker(this);
                     Player.MyInstance.GainXP(Xpmanager.CalculateXP(this as Enemy));
                 }
             }
@@ -158,10 +158,11 @@ public class Enemy : Character, IInteractable
 
     protected void Awake()
     {
+        health.Initialize(initHealth, initHealth);
         SpriteRenderer sr;
         sr = GetComponent<SpriteRenderer>();
         sr.enabled = true;
-        health.Initialize(initHealth, initHealth);
+       
         MyStartPosition = transform.position;
         MyAggroRange = initAggroRange;
         
@@ -189,6 +190,7 @@ public class Enemy : Character, IInteractable
             MyAggroRange = initAggroRange;
             MyAggroRange += distance;
             MyTarget = target;
+            target.AddAttacker(this);
         }
     }
 

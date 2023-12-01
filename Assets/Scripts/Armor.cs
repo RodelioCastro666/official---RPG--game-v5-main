@@ -15,28 +15,35 @@ public class Armor : Item
     private int intellect;
 
     [SerializeField]
-    private int Strength;
+    private int strength;
 
     [SerializeField]
-    private int stamina;
+    private int vitality;
 
     internal ArmorType MyArmorType { get => armorType; set => armorType = value; }
+
+    public int Intellect { get => intellect; set => intellect = value; }
+
+
+    public int Vitality { get => vitality; set => vitality = value; }
+
+    public int Strength { get => strength; set => strength = value; }
 
     public override string GetDescription()
     {
         string stats = string.Empty;
 
-        if (intellect > 0)
+        if (Intellect > 0)
         {
-            stats += string.Format("\n +{0} intellect", intellect);
+            stats += string.Format("\n +{0} intellect", Intellect);
         }
         if (Strength > 0)
         {
-            stats += string.Format("\n +{0} strength", intellect);
+            stats += string.Format("\n +{0} strength", Intellect);
         }
-        if (stamina> 0)
+        if (Vitality> 0)
         {
-            stats += string.Format("\n +{0} stamina", intellect);
+            stats += string.Format("\n +{0} stamina", Intellect);
         }
        
         return base.GetDescription() + stats;

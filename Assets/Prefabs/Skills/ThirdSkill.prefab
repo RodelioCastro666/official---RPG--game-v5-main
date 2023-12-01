@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8307717953314122704}
   - component: {fileID: 6882137879032160965}
   - component: {fileID: 1752173402670540054}
+  - component: {fileID: 766046447}
   m_Layer: 0
   m_Name: ThirdSkill
   m_TagString: Untagged
@@ -148,3 +149,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1
   myrigidbody: {fileID: 8307717953314122704}
+--- !u!95 &766046447
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7414353142807445877}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8073f8d16ea0a44448ceec0d7c0ea9ec, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

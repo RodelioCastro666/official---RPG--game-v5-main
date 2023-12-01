@@ -27,6 +27,15 @@ public class Player : Character
     [SerializeField]
     private Stat xpStat;
 
+
+    private int intelligence;
+
+    private int vitality;
+
+    private int strength;
+
+    
+
     [SerializeField]
     private Text levelText;
 
@@ -45,7 +54,7 @@ public class Player : Character
     [SerializeField]
     private Crafting profession;
 
-    Vector2 offset;
+    
 
     private Vector2 initPos;
 
@@ -84,6 +93,8 @@ public class Player : Character
 
     public int MyGold { get; set; }
 
+    public bool inCombat { get; set; } = false;
+
     public List<IInteractable> MyInteractables { get => interactables; set => interactables = value; }
 
     public Stat MyXp
@@ -93,7 +104,7 @@ public class Player : Character
 
     public Stat MyMana { get => mana; set => mana = value; }
 
-    public List<Enemy> MyAttackers { get => attackers; set => attackers = value; }
+    
 
     private bool isDashing = false;
 
@@ -119,11 +130,56 @@ public class Player : Character
     public void SetDefaultValues()
     {
         MyGold = 10000;
-        health.Initialize(initHealth, initHealth);
-        MyMana.Initialize(initMana, initMana);
+        vitality = 50;
+        intelligence = 10;
+        strength = 0;
+        ResetStats();
+        
         MyXp.Initialize(0, Mathf.Floor(100 * MyLevel * Mathf.Pow(MyLevel, 0.5f)));
         levelText.text = MyLevel.ToString();
         initPos = transform.parent.position;
+        UiManager.MyInstance.UpdateStatsText(intelligence, vitality, strength);
+    }
+
+    private void ResetStats()
+    {
+        MyHealth.Initialize(vitality * VitalityMultiplier(), vitality * VitalityMultiplier());
+        MyMana.Initialize(intelligence * IntelligenceMultiplier(), intelligence * IntelligenceMultiplier());
+    }
+
+    
+    private void UpdateMaxStats()
+    {
+        MyHealth.SetMaxValue(vitality * VitalityMultiplier());
+        MyMana.SetMaxValue(intelligence * IntelligenceMultiplier());
+    }
+
+    private int VitalityMultiplier()
+    {
+        if(MyLevel < 10)
+        {
+            return 2;
+        }
+        else if(MyLevel > 10)
+        {
+            return 5;
+        }
+
+        return 3;
+    }
+
+    private int IntelligenceMultiplier()
+    {
+        if (MyLevel < 10)
+        {
+            return 5;
+        }
+        else if (MyLevel > 10)
+        {
+            return 10;
+        }
+
+        return 15;
     }
 
     public void SetLimits(Vector3 min, Vector3 max)
@@ -152,7 +208,7 @@ public class Player : Character
             
             if (direction.y == 0)
             {
-             //   minimapIndicator.eulerAngles = new Vector3(0, 0, 270);
+                minimapIcon.eulerAngles = new Vector3(0, 0, 270);
             }
         }
 
@@ -162,7 +218,7 @@ public class Player : Character
             exitIndex = 3;
             if (direction.y == 0)
             {
-              //  minimapIndicator.eulerAngles = new Vector3(0, 0, 90);
+                minimapIcon.eulerAngles = new Vector3(0, 0, 90);
             }
 
         }
@@ -175,8 +231,8 @@ public class Player : Character
         {
             Debug.Log("up");
             exitIndex = 0;
-            
-            //  minimapIndicator.eulerAngles = new Vector3(0, 0, 0);
+
+            minimapIcon.eulerAngles = new Vector3(0, 0, 0);
 
         }
 
@@ -184,7 +240,7 @@ public class Player : Character
         {
             Debug.Log("down");
             exitIndex = 2;
-          //  minimapIndicator.eulerAngles = new Vector3(0, 0, 180);
+            minimapIcon.eulerAngles = new Vector3(0, 0, 180);
 
 
         }
@@ -256,13 +312,7 @@ public class Player : Character
             StopInit();
         }
 
-        foreach (string action in KeybindManager.MyInstance.Actionbinds.Keys)
-        {
-            if (Input.GetKeyDown(KeybindManager.MyInstance.Actionbinds[action]))
-            {
-                UiManager.MyInstance.ClickActionButton(action);
-            }
-        }
+       
 
 
     }
@@ -282,13 +332,6 @@ public class Player : Character
         }
     }
 
-    public void AddAttackers(Enemy enemy)
-    {
-        if (!MyAttackers.Contains(enemy))
-        {
-            MyAttackers.Add(enemy);
-        }
-    }
 
     private IEnumerator Ding()
     {
@@ -304,11 +347,41 @@ public class Player : Character
         MyXp.MyMaxValue = Mathf.Floor(MyXp.MyMaxValue);
         MyXp.MyCurrentValue = MyXp.MyOverFlow;
         MyXp.Reset();
-
+        vitality += IncreaseBaseStat();
+        intelligence += IncreaseBaseStat();
+        ResetStats();
         if (MyXp.MyCurrentValue >= MyXp.MyMaxValue)
         {
             StartCoroutine(Ding());
         }
+    }
+
+    public void EquipGear(Armor armor)
+    {
+        vitality += armor.Vitality;
+        intelligence += armor.Intellect;
+        strength += armor.Strength;
+        UpdateMaxStats();
+        UiManager.MyInstance.UpdateStatsText(intelligence, vitality, strength);
+    }
+
+    public void DEquipGear(Armor armor)
+    {
+        vitality -= armor.Vitality;
+        intelligence -= armor.Intellect;
+        strength -= armor.Strength;
+        UpdateMaxStats();
+        UiManager.MyInstance.UpdateStatsText(intelligence, vitality, strength);
+    }
+
+    private int IncreaseBaseStat()
+    {
+        if(MyLevel < 10)
+        {
+            return 3;
+        }
+
+        return 0;
     }
 
     public IEnumerator Respawn()
@@ -521,7 +594,31 @@ public class Player : Character
         
     }
 
-    
+    public override void AddAttacker(Character attacker)
+    {
+        int count = Attackers.Count;
+
+        base.AddAttacker(attacker);
+
+        if(count == 0)
+        {
+            inCombat = true;
+            CombatTextManager.MyInstance.CreateText(transform.position, "COMBAT MODE", SCTTYPE.TEXT, false);
+        }
+
+        
+    }
+
+    public override void RemoveAttacker(Character attacker)
+    {
+        base.RemoveAttacker(attacker);
+        if (Attackers.Count == 0)
+        {
+            inCombat = false;
+            CombatTextManager.MyInstance.CreateText(transform.position, "SAFE MODE", SCTTYPE.TEXT, false);
+        }
+       
+    }
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
@@ -566,24 +663,32 @@ public class Player : Character
     {
         Skill skill = skillBook.CastSkill(0);
 
-        if (!isUsingFirstSkill)
+        if (skill.ManaCost <= mana.MyCurrentValue)
         {
-            isUsingFirstSkill = true;
-            MyAnimator.SetBool("FSattack", isUsingFirstSkill);
+
+            if (!isUsingFirstSkill)
+            {
+                isUsingFirstSkill = true;
+                MyAnimator.SetBool("FSattack", isUsingFirstSkill);
 
 
 
-            yield return new WaitForSeconds(skill.MyCastTime);
+                yield return new WaitForSeconds(skill.MyCastTime);
 
-            Vector2 temp = new Vector2(MyAnimator.GetFloat("x"), MyAnimator.GetFloat("y"));
+                Vector2 temp = new Vector2(MyAnimator.GetFloat("x"), MyAnimator.GetFloat("y"));
 
-            FirstSkill firstSkill = Instantiate(skill.MySkillPrefab, transform.position, Quaternion.identity).GetComponent<FirstSkill>();
-            firstSkill.SetUp(temp, ChooseFirstSkillDirection());
+                FirstSkill firstSkill = Instantiate(skill.MySkillPrefab, transform.position, Quaternion.identity).GetComponent<FirstSkill>();
+                firstSkill.SetUp(temp, ChooseFirstSkillDirection());
+                firstSkill.Initialize(skill.MyDamage, transform);
 
-            StopFirstSkill();
+                yield return new WaitForSeconds(0.5f);
+
+                mana.MyCurrentValue -= skill.ManaCost;
+
+                StopFirstSkill();
+            }
+
         }
-
-       
     }
 
     private IEnumerator SecondSkill()
@@ -602,6 +707,8 @@ public class Player : Character
             Vector2 temp = new Vector2(MyAnimator.GetFloat("x"), MyAnimator.GetFloat("y"));
             SecondSkill secondtSkill = Instantiate(skill.MySkillPrefab, transform.position, Quaternion.identity).GetComponent<SecondSkill>();
             secondtSkill.SetUp(temp, ChooseFirstSkillDirection());
+
+            yield return new WaitForSeconds(1);
 
             StopSecondSkill();
         }
@@ -624,6 +731,8 @@ public class Player : Character
             ThirdSkill thirdSkill = Instantiate(skill.MySkillPrefab, transform.position, Quaternion.identity).GetComponent<ThirdSkill>();
             thirdSkill.SetUp(temp, ChooseFirstSkillDirection());
 
+            yield return new WaitForSeconds(0.5f);
+
             StopThirdSkill();
         }
 
@@ -634,19 +743,26 @@ public class Player : Character
     {
         Skill skill = skillBook.CastSkill(3);
 
-        if (!isUsingNormalSkill)
+        if(skill.ManaCost <= mana.MyCurrentValue)
         {
-            isUsingNormalSkill = true;
-            MyAnimator.SetBool("Nattack", isUsingNormalSkill);
+            if (!isUsingNormalSkill)
+            {
+                isUsingNormalSkill = true;
+                MyAnimator.SetBool("Nattack", isUsingNormalSkill);
 
-            yield return new WaitForSeconds(skill.MyCastTime);
+                yield return new WaitForSeconds(skill.MyCastTime);
 
-            Vector2 temp = new Vector2(MyAnimator.GetFloat("x"), MyAnimator.GetFloat("y"));
-            NormalAttack normalAttack = Instantiate(skill.MySkillPrefab, transform.position, Quaternion.identity).GetComponent<NormalAttack>();
-            normalAttack.SetUp(temp, ChooseFirstSkillDirection());
+                Vector2 temp = new Vector2(MyAnimator.GetFloat("x"), MyAnimator.GetFloat("y"));
+                NormalAttack normalAttack = Instantiate(skill.MySkillPrefab, transform.position, Quaternion.identity).GetComponent<NormalAttack>();
+                normalAttack.SetUp(temp, ChooseFirstSkillDirection());
 
-            StopNormalSkill();
+               
+
+                StopNormalSkill();
+            }
         }
+
+      
 
 
     }
@@ -681,6 +797,23 @@ public class Player : Character
         skillBook.StopSkill();
         isUsingNormalSkill = false;
         MyAnimator.SetBool("Nattack", isUsingNormalSkill);
+    }
+    public void CastFirstSkill()
+    {
+        
+        StartCoroutine(FirstSkill());
+    }
+    public void CastSecondSkill()
+    {
+        StartCoroutine(SecondSkill());
+    }
+    public void CastThirdSkill()
+    {
+        StartCoroutine(ThirdSkill());
+    }
+    public void CastNormalSkill()
+    {
+        StartCoroutine(NormalSkill());
     }
 
     public void Dash()

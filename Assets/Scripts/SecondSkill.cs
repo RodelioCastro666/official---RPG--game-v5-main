@@ -29,7 +29,14 @@ public class SecondSkill : MonoBehaviour
     }
 
 
-
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Enemy")
+        {
+            GetComponent<Animator>().SetTrigger("Impacto");
+            myrigidbody.velocity = Vector2.zero;
+        }
+    }
 
     public void SetUp(Vector2 velocity, Vector3 direction)
     {

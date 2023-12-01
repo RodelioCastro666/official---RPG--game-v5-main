@@ -22,9 +22,12 @@ public class CharButton : MonoBehaviour,  IDragHandler, IDropHandler,IEndDragHan
 
         if (MyEquippedArmor != null)
         {
+            Player.MyInstance.DEquipGear(MyEquippedArmor);
+
             if (MyEquippedArmor != armor)
             {
                 armor.MySlot.AddItem(MyEquippedArmor);
+                
             }
            
             UiManager.MyInstance.RefreshToolTip(MyEquippedArmor);
@@ -42,6 +45,8 @@ public class CharButton : MonoBehaviour,  IDragHandler, IDropHandler,IEndDragHan
         {
             HandScript.MyInstance.Drop();
         }
+
+        Player.MyInstance.EquipGear(armor);
     }
 
     
@@ -50,6 +55,13 @@ public class CharButton : MonoBehaviour,  IDragHandler, IDropHandler,IEndDragHan
     {
         icon.color = Color.white;
         icon.enabled = false;
+       
+
+        if(MyEquippedArmor != null)
+        {
+            Player.MyInstance.DEquipGear(MyEquippedArmor);
+        }
+
         equippedArmor  = null;
     }
 

@@ -107,6 +107,18 @@ public class Stat : MonoBehaviour
 
         content.fillAmount = MyCurrentValue / MyMaxValue;
     }
+    public void SetMaxValue(float maxValue)
+    {
+        if (content == null)
+        {
+            content = GetComponent<Image>();
+        }
+
+        MyMaxValue = maxValue;
+        MyCurrentValue = currentValue;
+
+        
+    }
 
     public void Reset()
     {

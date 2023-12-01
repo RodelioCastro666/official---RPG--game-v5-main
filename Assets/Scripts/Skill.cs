@@ -23,11 +23,16 @@ public class Skill
 
     [SerializeField]
     private float castTime;
+
+
     [SerializeField]
     private GameObject skillPrefab;
 
     [SerializeField]
     private Color barColor;
+
+    [SerializeField]
+    private int manaCost;
 
     public string MyName { get => name; }
 
@@ -42,4 +47,6 @@ public class Skill
     public GameObject MySkillPrefab { get => skillPrefab; }
 
     public Color MyBarColor { get => barColor; }
+
+    public int ManaCost { get => manaCost; set => manaCost = value; }
 }

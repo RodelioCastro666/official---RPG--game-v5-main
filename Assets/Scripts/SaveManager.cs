@@ -43,6 +43,7 @@ public class SaveManager : MonoBehaviour
             ShowSavedFiles(saved);
         }
 
+        GameObject.DontDestroyOnLoad(this.gameObject);
 
     }
 

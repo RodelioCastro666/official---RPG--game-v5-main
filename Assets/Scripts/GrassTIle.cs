@@ -9,7 +9,6 @@ public class GrassTile : Tile
 
     public override bool StartUp(Vector3Int position, ITilemap tilemap, GameObject go)
     {
-       
 
         return base.StartUp(position, tilemap, go);
     }

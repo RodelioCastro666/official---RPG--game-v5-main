@@ -40,8 +40,12 @@ public class PathState : IState
         {
             parent.ChangeState(new EvadeState());
         }
+        if (!parent.InRange)
+        {
+            parent.ChangeState(new EvadeState());
+        }
 
-       
+
     }
 
     public void Exit()

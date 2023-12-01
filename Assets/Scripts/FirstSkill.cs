@@ -9,14 +9,17 @@ public class FirstSkill : MonoBehaviour
 
     private BoxCollider2D boxCollider;
 
-    
 
-    
+    private bool alive = true;
+
+    private int  damage;
 
     private Transform source;
 
     [SerializeField]
     private Rigidbody2D myrigidbody;
+
+    public Transform Mytarget { get; set; }
 
     // Start is called before the first frame update
     void Awake()
@@ -25,6 +28,13 @@ public class FirstSkill : MonoBehaviour
         // boxCollider = GetComponent<BoxCollider2D>();
         myrigidbody = GetComponent<Rigidbody2D>();
     }
+
+    public void Initialize(int damage, Transform source)
+    {
+        this.damage = damage;
+        this.source = source;
+    }
+
 
     // Update is called once per frame
     void Update()
@@ -35,8 +45,17 @@ public class FirstSkill : MonoBehaviour
     }
 
 
-    
-   
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "Enemy")
+        {
+            speed = 0;
+            collision.GetComponent<Enemy>().TakeDamage(damage);
+            GetComponent<Animator>().SetTrigger("Impacto");
+            myrigidbody.velocity = Vector2.zero;
+        }
+    }
+
     public void SetUp(Vector2 velocity, Vector3 direction)
     {
         myrigidbody.velocity = velocity.normalized * speed;

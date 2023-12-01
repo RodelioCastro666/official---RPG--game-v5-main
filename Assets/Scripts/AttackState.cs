@@ -6,7 +6,7 @@ public class AttackState : IState
 {
     private Enemy parent;
 
-    private float attackCooldown = 3;
+    private float attackCooldown = 1;
 
     private float extraRange = .5f;
 
@@ -39,7 +39,10 @@ public class AttackState : IState
 
             if (distance >= parent.MyAttackRange + extraRange && !parent.IsAttacking)
             {
-                parent.ChangeState(new FollowState());
+                
+                    parent.ChangeState(new FollowState());
+                
+              
             }
         }
         else

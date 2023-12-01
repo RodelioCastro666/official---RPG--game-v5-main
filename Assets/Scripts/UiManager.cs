@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using TMPro;
 
 public class UiManager : MonoBehaviour
 {
@@ -57,6 +58,9 @@ public class UiManager : MonoBehaviour
 
     [SerializeField]
     private CharacterPanel charPanel;
+
+    [SerializeField]
+    private TMP_Text txtStrength, txtIntelligence, txtVitality;
 
     private Text toolTipText;
 
@@ -283,5 +287,12 @@ public class UiManager : MonoBehaviour
     public void RefreshToolTip(IDescribable description)
     {
         toolTipText.text = description.GetDescription();
+    }
+
+    public void UpdateStatsText(int intellect, int vitality, int strength)
+    {
+        this.txtStrength.text = "STRENGTH:<color=\"green\"> " + strength;
+        this.txtIntelligence.text = "INTELLIGENCE:<color=\"green\"> " + intellect;
+        this.txtVitality.text = "Vitality:<color=\"green\"> " + vitality;
     }
 }
