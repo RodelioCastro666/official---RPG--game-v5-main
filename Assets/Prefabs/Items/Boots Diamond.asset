@@ -18,6 +18,6 @@ MonoBehaviour:
   quality: 2
   price: 100
   armorType: 4
-  intellect: 10
-  strength: 0
-  vitality: 10
+  intellect: 200
+  strength: 200
+  vitality: 200

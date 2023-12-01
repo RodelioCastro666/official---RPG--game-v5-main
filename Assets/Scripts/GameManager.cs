@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     private Camera mainCamera;
     private int targetIndex;
 
+    private bool touchLastFrame = false;
+
     private HashSet<Vector3Int> blocked = new HashSet<Vector3Int>();
 
     public static GameManager MyInstance 
@@ -45,7 +47,16 @@ public class GameManager : MonoBehaviour
    
     void Update()
     {
-        ClickTarget();
+        if (touchLastFrame && Input.touchCount == 0)
+        {
+            touchLastFrame = false;
+        }
+        else if (!touchLastFrame && Input.touchCount > 0)
+        {
+            ClickTarget();
+            touchLastFrame = true;
+        }
+        
         NextTarget();
     }
 
@@ -61,14 +72,18 @@ public class GameManager : MonoBehaviour
 
                 if (hit.collider != null && (hit.collider.tag == "Enemy" || hit.collider.tag == "Interactable") && player.MyInteractables.Contains(entity))
                 {
-                    entity.Interact();
+                    if (Input.touchCount <= 1)
+                    {
+                        entity.Interact();
+                        Debug.Log("ll");
+                    }
 
 
                 }
 
 
             }
-            
+
 
         }
 
