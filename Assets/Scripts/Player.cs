@@ -62,6 +62,24 @@ public class Player : Character
     [SerializeField]
     private Text countDown;
 
+    private float coolDowntime;
+
+    [SerializeField]
+    private Image sccooldownOverlay;
+
+    [SerializeField]
+    private Text sccountDown;
+
+    private float sccoolDowntime;
+
+    [SerializeField]
+    private Image thcooldownOverlay;
+
+    [SerializeField]
+    private Text thcountDown;
+
+    private float thcoolDowntime;
+
     private Vector2 initPos;
 
     public Coroutine MyInitRoutine { get; set; }
@@ -79,7 +97,7 @@ public class Player : Character
     [SerializeField]
     private Transform minimapIcon;
 
-    private float coolDowntime;
+    
 
     [SerializeField]
     private FixedJoystick JoyStick;
@@ -699,6 +717,83 @@ public class Player : Character
         StartCoroutine(ProgressSkill());
     }
 
+    private IEnumerator ScProgressSkill()
+    {
+        sccooldownOverlay.fillAmount = 1;
+        sccountDown.enabled = true;
+        sccooldownOverlay.enabled = true;
+
+        float timePassed = Time.deltaTime;
+
+        float rate = 1.0f / sccoolDowntime;
+
+        float progress = 0.0f;
+
+        while (progress <= 1.0)
+        {
+            sccooldownOverlay.fillAmount = Mathf.Lerp(1, 0, progress);
+
+            progress += rate * Time.deltaTime;
+
+            timePassed += Time.deltaTime;
+
+            sccountDown.text = (sccoolDowntime - timePassed).ToString("F1");
+
+            if (sccoolDowntime - timePassed < 0)
+            {
+                sccountDown.text = "0.0";
+                sccooldownOverlay.enabled = false;
+                sccountDown.enabled = false;
+            }
+
+            yield return null;
+        }
+
+
+    }
+    public void ScRunCooldown()
+    {
+        StartCoroutine(ScProgressSkill());
+    }
+    private IEnumerator ThProgressSkill()
+    {
+        thcooldownOverlay.fillAmount = 1;
+        thcountDown.enabled = true;
+        thcooldownOverlay.enabled = true;
+
+        float timePassed = Time.deltaTime;
+
+        float rate = 1.0f / thcoolDowntime;
+
+        float progress = 0.0f;
+
+        while (progress <= 1.0)
+        {
+            thcooldownOverlay.fillAmount = Mathf.Lerp(1, 0, progress);
+
+            progress += rate * Time.deltaTime;
+
+            timePassed += Time.deltaTime;
+
+            thcountDown.text = (thcoolDowntime - timePassed).ToString("F1");
+
+            if (thcoolDowntime - timePassed < 0)
+            {
+                thcountDown.text = "0.0";
+                thcooldownOverlay.enabled = false;
+                thcountDown.enabled = false;
+            }
+
+            yield return null;
+        }
+
+
+    }
+    public void ThRunCooldown()
+    {
+        StartCoroutine(ThProgressSkill());
+    }
+
     private IEnumerator FirstSkill()
     {
             
@@ -714,8 +809,7 @@ public class Player : Character
 
                 if (!isUsingFirstSkill)
                 {
-                    coolDowntime = skill.MyCoolDown;
-                    skill.CastDone += new Done(RunCooldown);
+                    
 
                     isUsingFirstSkill = true;
                     MyAnimator.SetBool("FSattack", isUsingFirstSkill);
@@ -756,7 +850,8 @@ public class Player : Character
             isUsingSecondSkill = true;
             MyAnimator.SetBool("SSattack", isUsingSecondSkill);
 
-
+            sccoolDowntime = skill.MyCoolDown;
+            skill.CastDone += new Done(ScRunCooldown);
 
             yield return new WaitForSeconds(skill.MyCastTime);
 
@@ -780,6 +875,9 @@ public class Player : Character
         {
             isUsingThidSkill = true;
             MyAnimator.SetBool("TSattack", isUsingThidSkill);
+
+            thcoolDowntime = skill.MyCoolDown;
+            skill.CastDone += new Done(ThRunCooldown);
 
             yield return new WaitForSeconds(skill.MyCastTime);
 
