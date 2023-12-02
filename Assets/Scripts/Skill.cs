@@ -5,9 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
+public delegate void Done();
+
 [Serializable]
 public class Skill
 {
+    public event Done CastDone;
 
     [SerializeField]
     private string name;
@@ -34,6 +37,25 @@ public class Skill
     [SerializeField]
     private int manaCost;
 
+    [SerializeField]
+    private float coolDown;
+
+  
+
+    
+
+    public void OnCastDone()
+    {
+        if(CastDone != null)
+        {
+            CastDone.Invoke();
+        }
+    }
+
+    public  bool OnCoolDown { get; set; }
+
+   
+
     public string MyName { get => name; }
 
     public int MyDamage { get => damage;  }
@@ -49,4 +71,6 @@ public class Skill
     public Color MyBarColor { get => barColor; }
 
     public int ManaCost { get => manaCost; set => manaCost = value; }
+
+    public float MyCoolDown { get => coolDown; set => coolDown = value; }
 }

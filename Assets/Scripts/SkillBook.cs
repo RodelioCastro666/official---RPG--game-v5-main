@@ -27,6 +27,8 @@ public class SkillBook : MonoBehaviour
 
     private Coroutine fadeRoutine;
 
+    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,6 +57,13 @@ public class SkillBook : MonoBehaviour
         return skills[index];
     }
 
+    private IEnumerator CastOnCoolDown(int index)
+    {
+        skills[index].OnCastDone();
+        skills[index].OnCoolDown = true;
+        yield return new WaitForSeconds(skills[index].MyCoolDown);
+        skills[index].OnCoolDown = false;
+    }
 
     private IEnumerator ProgressSkill(int index)
     {
@@ -77,6 +86,11 @@ public class SkillBook : MonoBehaviour
             if (skills[index].MyCastTime - timePassed < 0)
             {
                 castTime.text = "0";
+
+                if(skills[index].MyCoolDown > 0)
+                {
+                    StartCoroutine(CastOnCoolDown(index));
+                }
             }
 
             yield return null;

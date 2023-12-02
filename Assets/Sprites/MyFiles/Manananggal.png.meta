@@ -666,7 +666,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Manananggal_25
+      name: attack1_left
       rect:
         serializedVersion: 2
         x: 0
@@ -687,7 +687,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Manananggal_26
+      name: attack2_left
       rect:
         serializedVersion: 2
         x: 32
@@ -708,7 +708,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Manananggal_27
+      name: attack3_left
       rect:
         serializedVersion: 2
         x: 64
@@ -729,7 +729,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Manananggal_28
+      name: attack4_left
       rect:
         serializedVersion: 2
         x: 96
@@ -750,7 +750,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Manananggal_29
+      name: attack5_left
       rect:
         serializedVersion: 2
         x: 128
@@ -771,7 +771,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Manananggal_30
+      name: attack1_right
       rect:
         serializedVersion: 2
         x: 0
@@ -792,7 +792,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Manananggal_31
+      name: attack2_right
       rect:
         serializedVersion: 2
         x: 32
@@ -813,7 +813,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Manananggal_32
+      name: attack3_right
       rect:
         serializedVersion: 2
         x: 64
@@ -834,7 +834,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Manananggal_33
+      name: attack4_right
       rect:
         serializedVersion: 2
         x: 96
@@ -855,7 +855,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Manananggal_34
+      name: attack5_right
       rect:
         serializedVersion: 2
         x: 128
@@ -876,7 +876,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Manananggal_35
+      name: attack1_down
       rect:
         serializedVersion: 2
         x: 0
@@ -897,7 +897,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Manananggal_36
+      name: attack2_down
       rect:
         serializedVersion: 2
         x: 32
@@ -918,7 +918,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Manananggal_37
+      name: attack3_down
       rect:
         serializedVersion: 2
         x: 64
@@ -939,7 +939,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Manananggal_38
+      name: attack4_down
       rect:
         serializedVersion: 2
         x: 96
@@ -960,7 +960,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Manananggal_39
+      name: attack5_down
       rect:
         serializedVersion: 2
         x: 128
@@ -981,11 +981,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Manananggal_40
+      name: attack1_up
       rect:
         serializedVersion: 2
         x: 0
-        y: 31
+        y: 32
         width: 32
         height: 32
       alignment: 0
@@ -1002,7 +1002,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Manananggal_41
+      name: attack2_up
       rect:
         serializedVersion: 2
         x: 32
@@ -1023,7 +1023,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Manananggal_42
+      name: attack3_up
       rect:
         serializedVersion: 2
         x: 64
@@ -1044,7 +1044,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Manananggal_43
+      name: attack4_up
       rect:
         serializedVersion: 2
         x: 96
@@ -1065,7 +1065,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Manananggal_44
+      name: attack5_up
       rect:
         serializedVersion: 2
         x: 128
@@ -1114,33 +1114,33 @@ TextureImporter:
       Manananggal_22: -120187164
       Manananggal_23: -593077411
       Manananggal_24: -262461808
-      Manananggal_25: 1631320260
-      Manananggal_26: 1358821868
-      Manananggal_27: 1392606289
-      Manananggal_28: 1602297843
-      Manananggal_29: 418440049
       Manananggal_3: -920251353
-      Manananggal_30: 100107892
-      Manananggal_31: -1822742275
-      Manananggal_32: -1372412030
-      Manananggal_33: 25897958
-      Manananggal_34: 1159048977
-      Manananggal_35: -18317391
-      Manananggal_36: -1609999772
-      Manananggal_37: -949830258
-      Manananggal_38: -1230061846
-      Manananggal_39: 2067734414
       Manananggal_4: -1599199038
-      Manananggal_40: -2114881419
-      Manananggal_41: -657643407
-      Manananggal_42: 1407236338
-      Manananggal_43: 1675645088
-      Manananggal_44: 100814496
       Manananggal_5: -268864233
       Manananggal_6: -1133200421
       Manananggal_7: -546624957
       Manananggal_8: -1361182209
       Manananggal_9: -1325502999
+      attack1_down: -18317391
+      attack1_left: 1631320260
+      attack1_right: 100107892
+      attack1_up: -2114881419
+      attack2_down: -1609999772
+      attack2_left: 1358821868
+      attack2_right: -1822742275
+      attack2_up: -657643407
+      attack3_down: -949830258
+      attack3_left: 1392606289
+      attack3_right: -1372412030
+      attack3_up: 1407236338
+      attack4_down: -1230061846
+      attack4_left: 1602297843
+      attack4_right: 25897958
+      attack4_up: 1675645088
+      attack5_down: 2067734414
+      attack5_left: 418440049
+      attack5_right: 1159048977
+      attack5_up: 100814496
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

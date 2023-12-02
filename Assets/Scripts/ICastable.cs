@@ -26,4 +26,17 @@ public interface ICastable
     {
         get;
     }
+
+    bool OnCooldown
+    {
+
+        get;
+        set;
+    }
+
+    float MyCoolDown
+    {
+        get;
+        set;
+    }
 }

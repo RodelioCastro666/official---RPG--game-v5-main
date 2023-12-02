@@ -230,7 +230,9 @@ MonoBehaviour:
   materials:
   - item: {fileID: 11400000, guid: 39979f9cc115a6841b712c59e8909e39, type: 2}
     count: 5
-  output: {fileID: 11400000, guid: 7e226e84dfa639c4cb23d4777410441a, type: 2}
+  output: {fileID: 11400000, guid: 695d4fb63df308b449fad4f800eeb77e, type: 2}
   outputCount: 1
   description: Create a goldBar
   highLight: {fileID: 6229092964463182285}
+  craftTime: 0
+  barColor: {r: 0, g: 0, b: 0, a: 0}

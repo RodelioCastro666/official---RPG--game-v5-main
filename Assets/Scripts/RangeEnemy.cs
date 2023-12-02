@@ -19,6 +19,10 @@ public class RangeEnemy : Enemy
         LookAtTarget();
         base.Update();
     }
+    private void LateUpdate()
+    {
+        UpdateDirection();
+    }
 
     public void Shoot(int exitIndex)
     {
@@ -29,7 +33,31 @@ public class RangeEnemy : Enemy
 
     private void UpdateDirection()
     {
+        if (updateDirection)
+        {
+            Vector2 dir = Vector2.zero;
 
+            if (MySpriteRenderer.sprite.name.Contains("up"))
+            {
+                dir = Vector2.up;
+            }
+            else if (MySpriteRenderer.sprite.name.Contains("down"))
+            {
+                dir = Vector2.down;
+            }
+            else if (MySpriteRenderer.sprite.name.Contains("left"))
+            {
+                dir = Vector2.left;
+            }
+            else if (MySpriteRenderer.sprite.name.Contains("right"))
+            {
+                dir = Vector2.right;
+            }
+
+            MyAnimator.SetFloat("x", dir.x);
+            MyAnimator.SetFloat("y", dir.y);
+            updateDirection = false;
+        }
     }
 
     private void LookAtTarget()
@@ -46,6 +74,8 @@ public class RangeEnemy : Enemy
             {
                 MyAnimator.SetFloat("x", directionToTarget.x);
                 MyAnimator.SetFloat("y", directionToTarget.y);
+
+                updateDirection = true;
             }
         }
     }

@@ -39,7 +39,7 @@ public class Enemy : Character, IInteractable
 
     public static Enemy instance;
 
-   
+  //  public List<Character> Attackers { get; set; } = new List<Character>();
 
     public bool InRange
     {

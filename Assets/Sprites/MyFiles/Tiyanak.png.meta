@@ -708,7 +708,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiyanak_27
+      name: attack1_left
       rect:
         serializedVersion: 2
         x: 0
@@ -729,7 +729,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiyanak_28
+      name: attack2_left
       rect:
         serializedVersion: 2
         x: 32
@@ -750,7 +750,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiyanak_29
+      name: attack3_left
       rect:
         serializedVersion: 2
         x: 64
@@ -771,7 +771,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiyanak_30
+      name: attack1_right
       rect:
         serializedVersion: 2
         x: 0
@@ -792,7 +792,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiyanak_31
+      name: attack2_right
       rect:
         serializedVersion: 2
         x: 32
@@ -813,7 +813,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiyanak_32
+      name: attack3_right
       rect:
         serializedVersion: 2
         x: 64
@@ -834,7 +834,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiyanak_33
+      name: attack1_up
       rect:
         serializedVersion: 2
         x: 0
@@ -876,7 +876,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiyanak_35
+      name: attack1_down
       rect:
         serializedVersion: 2
         x: 0
@@ -897,7 +897,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiyanak_36
+      name: attack2_down
       rect:
         serializedVersion: 2
         x: 32
@@ -918,7 +918,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiyanak_37
+      name: attack3_down
       rect:
         serializedVersion: 2
         x: 64
@@ -939,7 +939,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiyanak_38
+      name: attack2_up
       rect:
         serializedVersion: 2
         x: 33
@@ -960,7 +960,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiyanak_39
+      name: attack3_up
       rect:
         serializedVersion: 2
         x: 65
@@ -1011,26 +1011,26 @@ TextureImporter:
       Tiyanak_24: -604517281
       Tiyanak_25: -1573877889
       Tiyanak_26: 1475798981
-      Tiyanak_27: -793262669
-      Tiyanak_28: 1736656364
-      Tiyanak_29: 1520630650
       Tiyanak_3: -725814322
-      Tiyanak_30: -931292490
-      Tiyanak_31: 1219170067
-      Tiyanak_32: 1914787277
-      Tiyanak_33: -768297693
       Tiyanak_34: -27427934
-      Tiyanak_35: 1095019698
-      Tiyanak_36: -1165381130
-      Tiyanak_37: -1606018897
-      Tiyanak_38: 924260385
-      Tiyanak_39: 2089236647
       Tiyanak_4: 176572564
       Tiyanak_5: 576098995
       Tiyanak_6: -429188619
       Tiyanak_7: 513693855
       Tiyanak_8: 1246767742
       Tiyanak_9: -676657194
+      attack1_down: 1095019698
+      attack1_left: -793262669
+      attack1_right: -931292490
+      attack1_up: -768297693
+      attack2_down: -1165381130
+      attack2_left: 1736656364
+      attack2_right: 1219170067
+      attack2_up: 924260385
+      attack3_down: -1606018897
+      attack3_left: 1520630650
+      attack3_right: 1914787277
+      attack3_up: 2089236647
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -54,7 +54,11 @@ public class Player : Character
     [SerializeField]
     private Crafting profession;
 
-    
+    [SerializeField]
+    private Image cooldownOverlay;
+
+    [SerializeField]
+    private Text countDown;
 
     private Vector2 initPos;
 
@@ -73,17 +77,7 @@ public class Player : Character
     [SerializeField]
     private Transform minimapIcon;
 
-    
-
-    
-
-    private Vector3 destination;
-
-    private Vector3 current;
-
-    private Vector3 goal;
-
-    
+    private float coolDowntime;
 
     [SerializeField]
     private FixedJoystick JoyStick;
@@ -112,6 +106,7 @@ public class Player : Character
     {
         base.Start();
         skillBook = GetComponent<SkillBook>();
+        StartCoroutine(Regen());
     }
 
     protected override void Update()
@@ -568,6 +563,37 @@ public class Player : Character
         return false;
     }
 
+    private IEnumerator Regen()
+    {
+        while (true)
+        {
+            if (!inCombat)
+            {
+                if (health.MyCurrentValue < health.MyMaxValue)
+                {
+                    int value = Mathf.FloorToInt(health.MyMaxValue * 0.05f);
+                    health.MyCurrentValue += value;
+
+                    CombatTextManager.MyInstance.CreateText(transform.position, value.ToString(), SCTTYPE.HEAL, false);
+                }
+
+               
+
+                if (mana.MyCurrentValue < mana.MyMaxValue)
+                {
+                    int value = Mathf.FloorToInt(mana.MyMaxValue * 0.05f);
+                    mana.MyCurrentValue += value;
+
+                    CombatTextManager.MyInstance.CreateText(transform.position, value.ToString(), SCTTYPE.MANA, false);
+                }
+            }
+
+            yield return new WaitForSeconds(1.5f);
+        }
+
+        
+    }
+
     private void Block()
     {
         foreach (Blocks b in blocks)
@@ -596,7 +622,7 @@ public class Player : Character
 
     public override void AddAttacker(Character attacker)
     {
-        int count = Attackers.Count;
+        int count = base.Attackers.Count;
 
         base.AddAttacker(attacker);
 
@@ -612,7 +638,7 @@ public class Player : Character
     public override void RemoveAttacker(Character attacker)
     {
         base.RemoveAttacker(attacker);
-        if (Attackers.Count == 0)
+        if (base.Attackers.Count == 0)
         {
             inCombat = false;
             CombatTextManager.MyInstance.CreateText(transform.position, "SAFE MODE", SCTTYPE.TEXT, false);
@@ -658,37 +684,92 @@ public class Player : Character
         }
     }
 
+    private IEnumerator ProgressSkill()
+    {
+        cooldownOverlay.fillAmount = 1;
+        countDown.enabled = true;
+        cooldownOverlay.enabled = true;
+
+        float timePassed = Time.deltaTime;
+
+        float rate = 1.0f / coolDowntime;
+
+        float progress = 0.0f;
+
+        while (progress <= 1.0)
+        {
+            cooldownOverlay.fillAmount = Mathf.Lerp(1, 0, progress);
+
+            progress += rate * Time.deltaTime;
+
+            timePassed += Time.deltaTime;
+
+            countDown.text = (coolDowntime - timePassed).ToString("F1");
+
+            if (coolDowntime - timePassed < 0)
+            {
+                countDown.text = "0.0";
+                cooldownOverlay.enabled = false;
+                countDown.enabled = false;
+            }
+
+            yield return null;
+        }
+
+        
+    }
+
+    public void RunCooldown()
+    {
+        StartCoroutine(ProgressSkill());
+    }
 
     private IEnumerator FirstSkill()
     {
+            
+
         Skill skill = skillBook.CastSkill(0);
 
-        if (skill.ManaCost <= mana.MyCurrentValue)
+       
+
+        if (!skill.OnCoolDown)
         {
-
-            if (!isUsingFirstSkill)
+            if (skill.ManaCost <= mana.MyCurrentValue)
             {
-                isUsingFirstSkill = true;
-                MyAnimator.SetBool("FSattack", isUsingFirstSkill);
 
+                if (!isUsingFirstSkill)
+                {
+                    coolDowntime = skill.MyCoolDown;
+                    skill.CastDone += new Done(RunCooldown);
 
+                    isUsingFirstSkill = true;
+                    MyAnimator.SetBool("FSattack", isUsingFirstSkill);
 
-                yield return new WaitForSeconds(skill.MyCastTime);
+                    coolDowntime = skill.MyCoolDown;
+                    skill.CastDone += new Done(RunCooldown);
 
-                Vector2 temp = new Vector2(MyAnimator.GetFloat("x"), MyAnimator.GetFloat("y"));
+                    yield return new WaitForSeconds(skill.MyCastTime);
 
-                FirstSkill firstSkill = Instantiate(skill.MySkillPrefab, transform.position, Quaternion.identity).GetComponent<FirstSkill>();
-                firstSkill.SetUp(temp, ChooseFirstSkillDirection());
-                firstSkill.Initialize(skill.MyDamage, transform);
+                    Vector2 temp = new Vector2(MyAnimator.GetFloat("x"), MyAnimator.GetFloat("y"));
 
-                yield return new WaitForSeconds(0.5f);
+                    FirstSkill firstSkill = Instantiate(skill.MySkillPrefab, transform.position, Quaternion.identity).GetComponent<FirstSkill>();
+                    firstSkill.SetUp(temp, ChooseFirstSkillDirection());
+                    firstSkill.Initialize(skill.MyDamage, transform);
 
-                mana.MyCurrentValue -= skill.ManaCost;
+                    yield return new WaitForSeconds(0.5f);
 
-                StopFirstSkill();
+                    
+
+                    mana.MyCurrentValue -= skill.ManaCost;
+
+                    StopFirstSkill();
+                }
+
             }
-
         }
+
+      
+         
     }
 
     private IEnumerator SecondSkill()

@@ -43,6 +43,8 @@ public class Recipe : MonoBehaviour,ICastable
     public float MyCastTime { get => craftTime;  }
 
     public Color MyBarColor { get => barColor; }
+    public bool OnCooldown { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+    public float MyCoolDown { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
     void Start()
     {

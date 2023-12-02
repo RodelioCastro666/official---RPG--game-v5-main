@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum SCTTYPE { DAMAGE, HEAL, XP,TEXT}
+public enum SCTTYPE { DAMAGE, HEAL, XP,TEXT, MANA}
 
 public class CombatTextManager : MonoBehaviour
 {
@@ -25,52 +25,86 @@ public class CombatTextManager : MonoBehaviour
     [SerializeField]
     private GameObject combatTextPrefab;
 
-    public void CreateText(Vector2 position, string text , SCTTYPE type, bool crit)
+    protected Queue<SCTObject> SCTQueue = new Queue<SCTObject>();
+
+    public void CreateText(Vector2 position, string text, SCTTYPE type, bool crit)
     {
-
-        position.y += 0.5f;
-        position.x += 0.2f;
-        Text sct = Instantiate(combatTextPrefab, transform).GetComponent<Text>();
-        sct.transform.position = position;
-
-        string before = string.Empty;
-        string after = string.Empty;
-        switch (type) 
-        {
-            case SCTTYPE.DAMAGE:
-                before = "-";
-                sct.color = Color.red;
-                break;
-            case SCTTYPE.HEAL:
-                before = "+";
-                sct.color = Color.green;
-                break;
-            case SCTTYPE.XP:
-                before = "+";
-                after = " XP";
-                sct.color = Color.magenta;
-                break;
-            case SCTTYPE.TEXT:
-                sct.color = Color.white;
-                break;
-        }
-
-        sct.text = before + text + after;
-
-        if (crit)
-        {
-            sct.GetComponent<Animator>().SetBool("Crit", crit);
-        }
+        SCTQueue.Enqueue(new SCTObject() { Crit = crit, Position = position, Text = text, SCTTYPE = type });
     }
 
-    void Start()
+    public void Start()
     {
+        StartCoroutine(WriteText());
+    }
+
+    public IEnumerator WriteText()
+    {
+        while (true)
+        {
+            if(SCTQueue.Count > 0)
+            {
+                SCTObject sctObject = SCTQueue.Dequeue();
+
+                Vector2 sctPosition = sctObject.Position;
+
+                sctPosition.y += 0.5f;
+                sctPosition.x += 0.2f;
+                Text sct = Instantiate(combatTextPrefab, transform).GetComponent<Text>();
+                sct.transform.position = sctPosition;
+
+                string before = string.Empty;
+                string after = string.Empty;
+                switch (sctObject.SCTTYPE)
+                {
+                    case SCTTYPE.DAMAGE:
+                        before = "-";
+                        sct.color = Color.red;
+                        break;
+                    case SCTTYPE.HEAL:
+                        before = "+";
+                        sct.color = Color.green;
+                        break;
+                    case SCTTYPE.MANA:
+                        before = "+";
+                        sct.color = Color.blue;
+                        break;
+                    case SCTTYPE.XP:
+                        before = "+";
+                        after = " XP";
+                        sct.color = Color.magenta;
+                        break;
+                    case SCTTYPE.TEXT:
+                        sct.color = Color.white;
+                        break;
+                }
+
+                sct.text = before + sctObject.Text + after;
+
+                if (sctObject.Crit)
+                {
+                    sct.GetComponent<Animator>().SetBool("Crit", sctObject.Crit);
+                }
+            }
+
+            yield return new WaitForSeconds(0.5f);
+        }
+
         
+      
     }
 
     
-    void Update()
-    {
-        
-    }
+
+
+}
+
+public class SCTObject
+{
+    public Vector2 Position { get; set; }
+
+    public string Text { get; set; }
+
+    public SCTTYPE SCTTYPE { get; set; }
+
+    public bool Crit { get; set; }
 }

@@ -63,7 +63,7 @@ public class InventoryScripts : MonoBehaviour
     {
         Bag bag = (Bag)Instantiate(items[0]);
         bag.Initialized(80);
-       bag.Use();
+        bag.Use();
 
 
 
@@ -87,12 +87,12 @@ public class InventoryScripts : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.L))
         {
-            HealthPotion potion = (HealthPotion)Instantiate(items[1]);
+            HealthPotion potion = (HealthPotion)Instantiate(items[17]);
             AddItem(potion);
         }
         if (Input.GetKeyDown(KeyCode.F))
         {
-            GoldNugget nugget = (GoldNugget)Instantiate(items[14]);
+            GoldNugget nugget = (GoldNugget)Instantiate(items[16]);
             AddItem(nugget);
         }
         if (Input.GetKeyDown(KeyCode.H))

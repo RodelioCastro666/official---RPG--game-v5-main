@@ -66,7 +66,7 @@ public class PathState : IState
 
             float distance = Vector2.Distance(destination, transform.position);
 
-            float totalDistance = Vector2.Distance(parent.MyTarget.transform.parent.position, transform.position);
+            float totalDistance = Vector2.Distance(parent.MyTarget.transform.position, transform.position);
 
             if (cur.y > dest.y)
             {

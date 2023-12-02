@@ -42,8 +42,8 @@ public class Spell : IUsable, IMovable, ICastable
     public GameObject MySpellPrefab { get => spellPrefab; }
 
     public Color MyBarColor { get => barColor; }
-
-    
+    public bool OnCooldown { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public float MyCoolDown { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
     public void Use()
     {

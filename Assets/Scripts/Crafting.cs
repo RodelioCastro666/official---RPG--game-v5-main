@@ -25,11 +25,15 @@ public class Crafting : MonoBehaviour
     [SerializeField]
     private Text countTxt;
 
+    private Item item;
+
     [SerializeField]
     private ItemInfo craftItemInfo;
 
     private List<int> amounts = new List<int>();
 
+    private CraftingMaterial[] currentMaterials;
+ 
     private int maxAmount;
 
     private int amount;
@@ -122,6 +126,9 @@ public class Crafting : MonoBehaviour
     public void Craft(bool all)
     {
 
+        item = craftItemInfo.MyItem;
+        currentMaterials = selectedRecipe.Materials;
+
         if (CanCraft() && !Player.MyInstance.IsAttacking)
         {
             if (all)
@@ -184,9 +191,9 @@ public class Crafting : MonoBehaviour
 
     public void AddItemsToInventory()
     {
-        if (InventoryScripts.MyInstance.AddItem(craftItemInfo.MyItem))
+        if (InventoryScripts.MyInstance.AddItem(item))
         {
-            foreach(CraftingMaterial material in selectedRecipe.Materials)
+            foreach(CraftingMaterial material in currentMaterials)
             {
                 for(int i =0; i < material.MyCount; i++)
                 {
