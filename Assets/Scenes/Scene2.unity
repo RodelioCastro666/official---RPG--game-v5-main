@@ -9282,7 +9282,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 858517940}
         m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: Dash
+        m_MethodName: CastNormalSkill
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -122817,7 +122817,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 1
-      m_TileSpriteIndex: 24
+      m_TileSpriteIndex: 28
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -122827,7 +122827,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 1
-      m_TileSpriteIndex: 28
+      m_TileSpriteIndex: 27
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -122937,7 +122937,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 1
-      m_TileSpriteIndex: 28
+      m_TileSpriteIndex: 27
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -123048,15 +123048,15 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
-    m_Data: {fileID: 21300000, guid: ba06a4d18c98f5741aa1c426e546763d, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 3
     m_Data: {fileID: 21300000, guid: 27281aacda2074a42ab73f9eed548dd2, type: 3}
   - m_RefCount: 3
     m_Data: {fileID: 21300000, guid: dfcd200cab44d9847948abd6a96c4108, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 5
+  - m_RefCount: 2
+    m_Data: {fileID: 21300000, guid: ba06a4d18c98f5741aa1c426e546763d, type: 3}
+  - m_RefCount: 4
     m_Data: {fileID: 21300000, guid: 24e0eacb551f5394eb721a806b4d4533, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: 21300000, guid: 2f5b371d083680c41aa02310851824f7, type: 3}
@@ -127531,7 +127531,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4503425242274028784}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
@@ -128519,6 +128519,22 @@ PrefabInstance:
     - target: {fileID: 997388634, guid: afbe2315e1aa7034d85dbf7fbfa5af3b, type: 3}
       propertyPath: skills.Array.data[0].coolDown
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 997388634, guid: afbe2315e1aa7034d85dbf7fbfa5af3b, type: 3}
+      propertyPath: skills.Array.data[1].coolDown
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 997388634, guid: afbe2315e1aa7034d85dbf7fbfa5af3b, type: 3}
+      propertyPath: skills.Array.data[1].manaCost
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 997388634, guid: afbe2315e1aa7034d85dbf7fbfa5af3b, type: 3}
+      propertyPath: skills.Array.data[2].coolDown
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 997388634, guid: afbe2315e1aa7034d85dbf7fbfa5af3b, type: 3}
+      propertyPath: skills.Array.data[2].manaCost
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1386669750, guid: afbe2315e1aa7034d85dbf7fbfa5af3b, type: 3}
       propertyPath: m_IsTrigger

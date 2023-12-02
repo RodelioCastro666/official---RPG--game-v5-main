@@ -12,6 +12,10 @@ public class ThirdSkill : MonoBehaviour
     [SerializeField]
     private Rigidbody2D myrigidbody;
 
+    public int damage;
+
+    private Transform source;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -28,14 +32,23 @@ public class ThirdSkill : MonoBehaviour
         //transform.Translate(movementSpeed, 0, 0);
     }
 
+    public void Initialize(int damage, Transform source)
+    {
+        this.damage = damage;
+        this.source = source;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Enemy")
         {
+            speed = 0;
+            collision.GetComponent<Enemy>().TakeDamage(damage);
             GetComponent<Animator>().SetTrigger("Impacto");
             myrigidbody.velocity = Vector2.zero;
         }
     }
+
 
 
     public void SetUp(Vector2 velocity, Vector3 direction)

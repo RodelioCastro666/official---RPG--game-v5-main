@@ -27,6 +27,8 @@ public class Player : Character
     [SerializeField]
     private Stat xpStat;
 
+    
+    private FirstSkill firstskill;
 
     private int intelligence;
 
@@ -97,8 +99,7 @@ public class Player : Character
     }
 
     public Stat MyMana { get => mana; set => mana = value; }
-
-    
+    public FirstSkill MyFirstskill { get => firstskill; set => firstskill = value; }
 
     private bool isDashing = false;
 
@@ -127,7 +128,7 @@ public class Player : Character
         MyGold = 10000;
         vitality = 50;
         intelligence = 10;
-        strength = 0;
+        strength = 2;
         ResetStats();
         
         MyXp.Initialize(0, Mathf.Floor(100 * MyLevel * Mathf.Pow(MyLevel, 0.5f)));
@@ -140,6 +141,7 @@ public class Player : Character
     {
         MyHealth.Initialize(vitality * VitalityMultiplier(), vitality * VitalityMultiplier());
         MyMana.Initialize(intelligence * IntelligenceMultiplier(), intelligence * IntelligenceMultiplier());
+        
     }
 
     
@@ -147,6 +149,11 @@ public class Player : Character
     {
         MyHealth.SetMaxValue(vitality * VitalityMultiplier());
         MyMana.SetMaxValue(intelligence * IntelligenceMultiplier());
+        
+
+
+
+             
     }
 
     private int VitalityMultiplier()
@@ -175,6 +182,20 @@ public class Player : Character
         }
 
         return 15;
+    }
+
+    private int StrengthMultiplier()
+    {
+        if (MyLevel < 10)
+        {
+            return 2;
+        }
+        else if (MyLevel > 10)
+        {
+            return 4;
+        }
+
+        return 10;
     }
 
     public void SetLimits(Vector3 min, Vector3 max)
@@ -344,6 +365,7 @@ public class Player : Character
         MyXp.Reset();
         vitality += IncreaseBaseStat();
         intelligence += IncreaseBaseStat();
+        
         ResetStats();
         if (MyXp.MyCurrentValue >= MyXp.MyMaxValue)
         {
@@ -376,7 +398,7 @@ public class Player : Character
             return 3;
         }
 
-        return 0;
+        return 10;
     }
 
     public IEnumerator Respawn()
@@ -469,54 +491,7 @@ public class Player : Character
 
     }
 
-    //public void ClickToMove()
-    //{
-    //    if(MyPath != null)
-    //    {
-    //        transform.parent.position = Vector2.MoveTowards(transform.parent.position, destination, 2 * Time.deltaTime);
-
-    //        Vector3Int dest = aStar.MyTilemap.WorldToCell(destination);
-    //        Vector3Int cur = aStar.MyTilemap.WorldToCell(current);
-
-           
-
-    //        float distance = Vector2.Distance(destination, transform.parent.position);
-
-    //        if(cur.y > dest.y)
-    //        {
-    //            Direction = Vector2.down;
-    //        }
-    //        else if(cur.y < dest.y)
-    //        {
-    //            Direction = Vector2.up;
-    //        }
-    //        if(cur.y == dest.y)
-    //        {
-    //            if(cur.x > dest.x)
-    //            {
-    //                Direction = Vector2.left;
-    //            }
-    //            else if(cur.x < dest.x)
-    //            {
-    //                Direction = Vector2.right;
-    //            }
-    //        }
-
-
-    //        if(distance <= 0f)
-    //        {
-    //            if(MyPath.Count > 0)
-    //            {
-    //                current = destination;
-    //                destination = MyPath.Pop();
-    //            }
-    //            else
-    //            {
-    //                MyPath = null;
-    //            }
-    //        }
-    //    }
-    //}
+    
 
    
     public void CastSpell(ICastable castable)
@@ -754,7 +729,7 @@ public class Player : Character
 
                     FirstSkill firstSkill = Instantiate(skill.MySkillPrefab, transform.position, Quaternion.identity).GetComponent<FirstSkill>();
                     firstSkill.SetUp(temp, ChooseFirstSkillDirection());
-                    firstSkill.Initialize(skill.MyDamage, transform);
+                    firstSkill.Initialize(skill.MyDamage * strength, transform);
 
                     yield return new WaitForSeconds(0.5f);
 
@@ -788,7 +763,7 @@ public class Player : Character
             Vector2 temp = new Vector2(MyAnimator.GetFloat("x"), MyAnimator.GetFloat("y"));
             SecondSkill secondtSkill = Instantiate(skill.MySkillPrefab, transform.position, Quaternion.identity).GetComponent<SecondSkill>();
             secondtSkill.SetUp(temp, ChooseFirstSkillDirection());
-
+            secondtSkill.Initialize(skill.MyDamage * strength, transform);
             yield return new WaitForSeconds(1);
 
             StopSecondSkill();
@@ -811,7 +786,7 @@ public class Player : Character
             Vector2 temp = new Vector2(MyAnimator.GetFloat("x"), MyAnimator.GetFloat("y"));
             ThirdSkill thirdSkill = Instantiate(skill.MySkillPrefab, transform.position, Quaternion.identity).GetComponent<ThirdSkill>();
             thirdSkill.SetUp(temp, ChooseFirstSkillDirection());
-
+            thirdSkill.Initialize(skill.MyDamage * strength, transform);
             yield return new WaitForSeconds(0.5f);
 
             StopThirdSkill();
@@ -836,8 +811,9 @@ public class Player : Character
                 Vector2 temp = new Vector2(MyAnimator.GetFloat("x"), MyAnimator.GetFloat("y"));
                 NormalAttack normalAttack = Instantiate(skill.MySkillPrefab, transform.position, Quaternion.identity).GetComponent<NormalAttack>();
                 normalAttack.SetUp(temp, ChooseFirstSkillDirection());
+                normalAttack.Initialize(skill.MyDamage * strength, transform);
 
-               
+
 
                 StopNormalSkill();
             }

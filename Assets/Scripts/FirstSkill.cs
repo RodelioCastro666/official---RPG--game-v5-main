@@ -12,7 +12,7 @@ public class FirstSkill : MonoBehaviour
 
     private bool alive = true;
 
-    private int  damage;
+    public int  fsdamage;
 
     private Transform source;
 
@@ -31,7 +31,7 @@ public class FirstSkill : MonoBehaviour
 
     public void Initialize(int damage, Transform source)
     {
-        this.damage = damage;
+        this.fsdamage = damage;
         this.source = source;
     }
 
@@ -50,7 +50,7 @@ public class FirstSkill : MonoBehaviour
         if(collision.tag == "Enemy")
         {
             speed = 0;
-            collision.GetComponent<Enemy>().TakeDamage(damage);
+            collision.GetComponent<Enemy>().TakeDamage(fsdamage);
             GetComponent<Animator>().SetTrigger("Impacto");
             myrigidbody.velocity = Vector2.zero;
         }
