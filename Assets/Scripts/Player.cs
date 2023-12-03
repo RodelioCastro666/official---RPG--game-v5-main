@@ -641,6 +641,11 @@ public class Player : Character
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.tag == "MySkill")
+        {
+            Vector2 difference = transform.position - collision.transform.position;
+            transform.position = new Vector2(transform.position.x + difference.x, transform.position.y + difference.y);
+        }
         if (collision.tag == "Enemy" || collision.tag == "Interactable")
         {
             IInteractable interactable = collision.GetComponent<IInteractable>();
@@ -652,6 +657,7 @@ public class Player : Character
 
            
         }
+        
     }
 
     public void OnTriggerExit2D(Collider2D collision)

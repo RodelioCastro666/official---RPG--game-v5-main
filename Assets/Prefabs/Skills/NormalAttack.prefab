@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1658745108}
   m_Layer: 0
   m_Name: NormalAttack
-  m_TagString: Untagged
+  m_TagString: MySkill
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

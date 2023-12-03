@@ -90,6 +90,16 @@ public class Enemy : Character, IInteractable
 
     }
 
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "MySkill")
+        {
+            Vector2 difference = transform.position - collision.transform.position;
+            transform.position = new Vector2(transform.position.x + difference.x, transform.position.y + difference.y);
+        }
+    }
+
     public Character Select()
     {
         healthGroup.alpha = 1;

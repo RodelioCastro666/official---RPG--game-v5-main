@@ -12,6 +12,8 @@ TagManager:
   - Ground
   - breakable
   - uy
+  - MySkill
+  - ScreenShake
   layers:
   - Default
   - TransparentFX

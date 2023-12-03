@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,7 +20,7 @@ public class CameraFollow : MonoBehaviour
     void Start()
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
-        player = target.GetComponent<Player>(); 
+        player = target.GetComponent<Player>();
 
         Vector3 minTile = tilemaps.CellToWorld(tilemaps.cellBounds.min);
         Vector3 maxTile = tilemaps.CellToWorld(tilemaps.cellBounds.max);

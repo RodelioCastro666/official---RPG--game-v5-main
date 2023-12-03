@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 766046447}
   m_Layer: 0
   m_Name: ThirdSkill
-  m_TagString: Untagged
+  m_TagString: MySkill
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -149,6 +149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1
   myrigidbody: {fileID: 8307717953314122704}
+  damage: 0
 --- !u!95 &766046447
 Animator:
   serializedVersion: 5

@@ -9,6 +9,7 @@ public class FirstSkill : MonoBehaviour
 
     private BoxCollider2D boxCollider;
 
+    private Shake shake;
 
     private bool alive = true;
 
@@ -24,7 +25,7 @@ public class FirstSkill : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-       
+        shake = GameObject.FindGameObjectWithTag("ScreenShake").GetComponent<Shake>();
         // boxCollider = GetComponent<BoxCollider2D>();
         myrigidbody = GetComponent<Rigidbody2D>();
     }
@@ -49,6 +50,7 @@ public class FirstSkill : MonoBehaviour
     {
         if(collision.tag == "Enemy")
         {
+            shake.CamSHAKE();
             speed = 0;
             collision.GetComponent<Enemy>().TakeDamage(fsdamage);
             GetComponent<Animator>().SetTrigger("Impacto");

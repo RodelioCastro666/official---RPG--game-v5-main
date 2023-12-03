@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1607546359}
   m_Layer: 0
   m_Name: FS_Slash
-  m_TagString: Untagged
+  m_TagString: MySkill
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -148,6 +148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  fsdamage: 0
   myrigidbody: {fileID: -3354600760263437913}
 --- !u!95 &1607546359
 Animator:

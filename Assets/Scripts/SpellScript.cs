@@ -8,6 +8,7 @@ public class SpellScript : MonoBehaviour
     [SerializeField]
     private float speed;
 
+    [SerializeField]
     private Rigidbody2D myRigidBody;
 
     private Character source;
@@ -54,7 +55,7 @@ public class SpellScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "HitBox"  && collision.transform == MyTarget)
+        if (collision.tag == "Player" )
         {
             Character c = collision.GetComponentInParent<Character>();
             speed = 0;
