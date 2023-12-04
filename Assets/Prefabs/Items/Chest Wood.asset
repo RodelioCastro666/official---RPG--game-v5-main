@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: bceca7a4105c20743a136cd1391c9c5b, type: 3}
   stackSize: 0
-  title: WTF Chest
+  title: Wood Chest
   quality: 0
   price: 78
   armorType: 2
   intellect: 10
-  Strength: 10
-  stamina: 10
+  strength: 0
+  vitality: 0

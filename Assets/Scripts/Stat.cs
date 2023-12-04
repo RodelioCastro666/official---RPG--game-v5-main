@@ -116,8 +116,6 @@ public class Stat : MonoBehaviour
 
         MyMaxValue = maxValue;
         MyCurrentValue = currentValue;
-
-        
     }
 
     public void Reset()

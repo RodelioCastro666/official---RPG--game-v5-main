@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: f80fcb86645799c43b734b523d7f54c7, type: 3}
   stackSize: 0
-  title: WTF Gloves
-  quality: 3
+  title: Wood Gloves
+  quality: 0
   price: 87
   armorType: 3
   intellect: 10
-  Strength: 10
-  stamina: 10
+  strength: 0
+  vitality: 0

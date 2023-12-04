@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 1366088293, guid: 38f0a637c60659644bb132b612736248, type: 3}
   stackSize: 0
-  title: WTF Sword
+  title: Wood Sword
   quality: 0
   price: 35
   armorType: 5
   intellect: 10
-  Strength: 10
-  stamina: 10
+  strength: 0
+  vitality: 0

@@ -5,12 +5,13 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 using UnityEngine.UI;
 
 public class SaveManager : MonoBehaviour
 {
     [SerializeField]
-    private Item[] items; 
+    private Item[] items;
 
     private Chest[] chests;
 
@@ -28,6 +29,7 @@ public class SaveManager : MonoBehaviour
     [SerializeField]
     private Text dialogueText;
 
+
     private SavedGame current;
 
     private string action;
@@ -35,15 +37,16 @@ public class SaveManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+         Debug.Log(Application.persistentDataPath);
+
         chests = FindObjectsOfType<Chest>();
         equipment = FindObjectsOfType<CharButton>();
 
-        foreach(SavedGame saved in saveSlots)
+        foreach (SavedGame saved in saveSlots)
         {
             ShowSavedFiles(saved);
         }
 
-        GameObject.DontDestroyOnLoad(this.gameObject);
 
     }
 
@@ -60,11 +63,17 @@ public class SaveManager : MonoBehaviour
         }
     }
 
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
     public void ShowDialogue(GameObject clickButton)
     {
         action = clickButton.name;
 
-        switch (action) 
+        switch (action)
         {
             case "Load":
                 dialogueText.text = "Load Game?";
@@ -111,7 +120,7 @@ public class SaveManager : MonoBehaviour
 
             PlayerPrefs.SetInt("Load", savedGame.MyIndex);
             SceneManager.LoadScene(data.MyScene);
-            
+
         }
     }
 
@@ -120,23 +129,13 @@ public class SaveManager : MonoBehaviour
         dialogue.SetActive(false);
     }
 
+
     private void Delete(SavedGame savedGame)
     {
         File.Delete(Application.persistentDataPath + "/" + savedGame.gameObject.name + ".dat");
         savedGame.HideVisuals();
     }
 
-    private void ShowSavedFiles(SavedGame savedGame)
-    {
-        if(File.Exists(Application.persistentDataPath + "/" + savedGame.gameObject.name + ".dat"))
-        {
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/" + savedGame.gameObject.name + ".dat", FileMode.Open);
-            SaveData data = (SaveData)bf.Deserialize(file);
-            file.Close();
-            savedGame.ShowInfo(data);
-        }
-    }
 
     public void Save(SavedGame savedGame)
     {
@@ -144,19 +143,23 @@ public class SaveManager : MonoBehaviour
         {
             BinaryFormatter bf = new BinaryFormatter();
 
-            FileStream file = File.Open(Application.persistentDataPath + "/" + savedGame.gameObject.name +  ".dat", FileMode.Create);
+            FileStream file = File.Open(Application.persistentDataPath + "/" + savedGame.gameObject.name + ".dat", FileMode.Create);
 
             SaveData data = new SaveData();
 
             data.MyScene = SceneManager.GetActiveScene().name;
 
+            SavePlayer(data);
+
+            SaveInventory(data);
+
             SaveEquipment(data);
 
             SaveBags(data);
 
-            SaveInventory(data);
+            
 
-            SavePlayer(data);
+            
 
             SaveChest(data);
 
@@ -171,62 +174,42 @@ public class SaveManager : MonoBehaviour
             file.Close();
 
             ShowSavedFiles(savedGame);
+
+
         }
-        catch(System.Exception)
+        catch (System.Exception)
         {
+
             Delete(savedGame);
+
             PlayerPrefs.DeleteKey("Load");
+
         }
     }
+
+    private void ShowSavedFiles(SavedGame savedGame)
+    {
+        if (File.Exists(Application.persistentDataPath + "/" + savedGame.gameObject.name + ".dat"))
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(Application.persistentDataPath + "/" + savedGame.gameObject.name + ".dat", FileMode.Open);
+            SaveData data = (SaveData)bf.Deserialize(file);
+            file.Close();
+            savedGame.ShowInfo(data);
+        }
+    }
+
+
 
     private void SavePlayer(SaveData data)
     {
         data.MyPlayerData = new PlayerData(Player.MyInstance.MyLevel,
-            Player.MyInstance.MyXp.MyCurrentValue, Player.MyInstance.MyXp.MyMaxValue,
-            Player.MyInstance.MyHealth.MyCurrentValue, Player.MyInstance.MyHealth.MyMaxValue,
-            Player.MyInstance.MyMana.MyCurrentValue, Player.MyInstance.MyMana.MyMaxValue,
-            Player.MyInstance.transform.position);
-    }
+             Player.MyInstance.MyXp.MyCurrentValue, Player.MyInstance.MyXp.MyMaxValue,
+             Player.MyInstance.MyHealth.MyCurrentValue, Player.MyInstance.MyHealth.MyMaxValue,
+             Player.MyInstance.MyMana.MyCurrentValue, Player.MyInstance.MyMana.MyMaxValue,
+             Player.MyInstance.transform.position);
 
-    public void SaveBags(SaveData data)
-    {
-        for (int i = 1; i < InventoryScripts.MyInstance.MyBags.Count; i++)
-        {
-            data.MyInventoryData.MyBags.Add(new BagData(InventoryScripts.MyInstance.MyBags[i].MySlotCount, InventoryScripts.MyInstance.MyBags[i].MyBagButton.MyBagIndex));
-        }
-    }
-
-    public void SaveEquipment(SaveData data)
-    {
-        foreach (CharButton charButton in equipment) 
-        { 
-            if(charButton.MyEquippedArmor != null)
-            {
-                data.MyEquipmentData.Add(new EquipmentData(charButton.MyEquippedArmor.MyTitle, charButton.name));
-            }
-        }
-    }
-
-    public void SaveActionButtons(SaveData data)
-    {
-        for (int i = 0; i < actionButtons.Length; i++)
-        {
-            if (actionButtons[i].MyUseable != null)
-            {
-                ActionButtonData  action;
-
-                if(actionButtons[i].MyUseable is Spell)
-                {
-                    action = new ActionButtonData((actionButtons[i].MyUseable as Spell).MyTitle, false, i);
-                }
-                else 
-                {
-                     action = new ActionButtonData((actionButtons[i].MyUseable as Item).MyTitle, true, i);
-                }
-
-                data.MyActionButtonData.Add(action);
-            }
-        }
+        Debug.Log(Player.MyInstance.MyMana.MyMaxValue + "   Save");
     }
 
     private void SaveChest(SaveData data)
@@ -245,11 +228,44 @@ public class SaveManager : MonoBehaviour
         }
     }
 
-    private void SaveQuest(SaveData data)
+    public void SaveBags(SaveData data)
     {
-        foreach(Quest quest in QuestLog.MyInstance.MyQuest)
+        for (int i = 1; i < InventoryScripts.MyInstance.MyBags.Count; i++)
         {
-            data.MyQuestData.Add(new QuestData(quest.MyTitle, quest.MyDescription, quest.MyCollectObjectives, quest.MyKillObjectives, quest.MyQuestGiver.MyQuestGiverID));
+            data.MyInventoryData.MyBags.Add(new BagData(InventoryScripts.MyInstance.MyBags[i].MySlotCount, InventoryScripts.MyInstance.MyBags[i].MyBagButton.MyBagIndex));
+        }
+    }
+
+    public void SaveEquipment(SaveData data)
+    {
+        foreach (CharButton charButton in equipment)
+        {
+            if (charButton.MyEquippedArmor != null)
+            {
+                data.MyEquipmentData.Add(new EquipmentData(charButton.MyEquippedArmor.MyTitle, charButton.name));
+            }
+        }
+    }
+
+    public void SaveActionButtons(SaveData data)
+    {
+        for (int i = 0; i < actionButtons.Length; i++)
+        {
+            if (actionButtons[i].MyUseable != null)
+            {
+                ActionButtonData action;
+
+                if (actionButtons[i].MyUseable is Spell)
+                {
+                    action = new ActionButtonData((actionButtons[i].MyUseable as Spell).MyTitle, false, i);
+                }
+                else
+                {
+                    action = new ActionButtonData((actionButtons[i].MyUseable as Item).MyTitle, true, i);
+                }
+
+                data.MyActionButtonData.Add(action);
+            }
         }
     }
 
@@ -257,9 +273,17 @@ public class SaveManager : MonoBehaviour
     {
         List<SlotScript> slots = InventoryScripts.MyInstance.GetAllItems();
 
-        foreach(SlotScript slot in slots)
+        foreach (SlotScript slot in slots)
         {
-            data.MyInventoryData.MyItems.Add(new ItemData(slot.MyItem.MyTitle, slot.MyItems.Count, slot.MyIndex, slot.MyBag.MyBagIndex));
+            data.MyInventoryData.MyItems.Add(new ItemData(slot.MyItem.MyTitle, slot.MyItems.Count, slot.MyIndex));
+        }
+    }
+
+    private void SaveQuest(SaveData data)
+    {
+        foreach (Quest quest in QuestLog.MyInstance.MyQuest)
+        {
+            data.MyQuestData.Add(new QuestData(quest.MyTitle, quest.MyDescription, quest.MyCollectObjectives, quest.MyKillObjectives, quest.MyQuestGiver.MyQuestGiverID));
         }
     }
 
@@ -267,7 +291,7 @@ public class SaveManager : MonoBehaviour
     {
         QuestGiver[] questGivers = FindObjectsOfType<QuestGiver>();
 
-        foreach(QuestGiver questGiver in questGivers)
+        foreach (QuestGiver questGiver in questGivers)
         {
             data.MyQuestGiverData.Add(new QuestGiverData(questGiver.MyQuestGiverID, questGiver.MyCompletedQuest));
         }
@@ -283,17 +307,15 @@ public class SaveManager : MonoBehaviour
 
             SaveData data = (SaveData)bf.Deserialize(file);
 
-            
-
             file.Close();
-
-            LoadEquipemnt(data);
-
-            Loadbags(data);
 
             LoadInventory(data);
 
             LoadPlayer(data);
+
+            LoadEquipemnt(data);
+
+            LoadBags(data);
 
             LoadChest(data);
 
@@ -302,10 +324,15 @@ public class SaveManager : MonoBehaviour
             LoadQuest(data);
 
             LoadQuestGiver(data);
+
+
         }
         catch (System.Exception)
         {
-            throw;
+            Delete(savedGame);
+            PlayerPrefs.DeleteKey("Load");
+            //SceneManager.LoadScene(0);
+
         }
     }
 
@@ -316,29 +343,32 @@ public class SaveManager : MonoBehaviour
         Player.MyInstance.MyHealth.Initialize(data.MyPlayerData.MyHealth, data.MyPlayerData.MyMaxHealth);
         Player.MyInstance.MyMana.Initialize(data.MyPlayerData.MyMana, data.MyPlayerData.MyMaxMana);
         Player.MyInstance.MyXp.Initialize(data.MyPlayerData.MyXp, data.MyPlayerData.MyMaxXp);
+        
+  
         Player.MyInstance.transform.position = new Vector2(data.MyPlayerData.MyX, data.MyPlayerData.MyY);
-    }
 
-   
+        Debug.Log(Player.MyInstance.MyMana.MyMaxValue + "    LOAD");
+
+    }
 
     private void LoadChest(SaveData data)
     {
         foreach (ChestData chest in data.MyChestData)
         {
-            Chest c = Instantiate(Array.Find(chests, x => x.name == chest.MyName));
+            Chest c = Array.Find(chests, x => x.name == chest.MyName);
 
-            foreach(ItemData itemData in chest.MyItems)
+            foreach (ItemData itemData in chest.MyItems)
             {
-                Item item = Array.Find(items, x => x.MyTitle == itemData.MyTitle);
+                Item item = Instantiate(Array.Find(items, x => x.MyTitle == itemData.MyTitle));
                 item.MySlot = c.MyBag.MySlots.Find(x => x.MyIndex == itemData.MySlotIndex);
                 c.MyItems.Add(item);
             }
         }
     }
 
-    private void Loadbags(SaveData data)
+    private void LoadBags(SaveData data)
     {
-        foreach(BagData bagData in data.MyInventoryData.MyBags )
+        foreach (BagData bagData in data.MyInventoryData.MyBags)
         {
             Bag newBag = (Bag)Instantiate(items[0]);
 
@@ -350,17 +380,18 @@ public class SaveManager : MonoBehaviour
 
     private void LoadEquipemnt(SaveData data)
     {
-        foreach(EquipmentData equipmentData in data.MyEquipmentData)
+        foreach (EquipmentData equipmentData in data.MyEquipmentData)
         {
             CharButton cb = Array.Find(equipment, x => x.name == equipmentData.MyType);
 
-            cb.EquipArmor(Array.Find(items, x => x.MyTitle == equipmentData.MyTitle) as Armor); 
+            cb.EquipArmor(Array.Find(items, x => x.MyTitle == equipmentData.MyTitle) as Armor);
+
         }
     }
 
     private void LoadActionButton(SaveData data)
     {
-        foreach(ActionButtonData buttonData in data.MyActionButtonData)
+        foreach (ActionButtonData buttonData in data.MyActionButtonData)
         {
             if (buttonData.IsItem)
             {
@@ -375,11 +406,11 @@ public class SaveManager : MonoBehaviour
 
     private void LoadInventory(SaveData data)
     {
-        foreach(ItemData itemData in data.MyInventoryData.MyItems)
+        foreach (ItemData itemData in data.MyInventoryData.MyItems)
         {
             Item item = Instantiate(Array.Find(items, x => x.MyTitle == itemData.MyTitle));
 
-            for(int i = 0; i < itemData.MyStackCount; i++)
+            for (int i = 0; i < itemData.MyStackCount; i++)
             {
                 InventoryScripts.MyInstance.PlaceInSpecific(item, itemData.MySlotIndex, itemData.MyBagIndex);
             }
@@ -390,7 +421,7 @@ public class SaveManager : MonoBehaviour
     {
         QuestGiver[] questGivers = FindObjectsOfType<QuestGiver>();
 
-        foreach(QuestData questData in data.MyQuestData)
+        foreach (QuestData questData in data.MyQuestData)
         {
             QuestGiver qg = Array.Find(questGivers, x => x.MyQuestGiverID == questData.MyQuestGiverID);
             Quest q = Array.Find(qg.MyQuests, x => x.MyTitle == questData.Mytitle);
@@ -404,7 +435,7 @@ public class SaveManager : MonoBehaviour
     {
         QuestGiver[] questGivers = FindObjectsOfType<QuestGiver>();
 
-        foreach(QuestGiverData questGiverData in data.MyQuestGiverData)
+        foreach (QuestGiverData questGiverData in data.MyQuestGiverData)
         {
             QuestGiver questGiver = Array.Find(questGivers, x => x.MyQuestGiverID == questGiverData.MyQuestGiverID);
             questGiver.MyCompletedQuest = questGiverData.MyCompleteQuest;
@@ -412,5 +443,3 @@ public class SaveManager : MonoBehaviour
         }
     }
 }
-
-

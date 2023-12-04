@@ -18,35 +18,40 @@ public class CharButton : MonoBehaviour,  IDragHandler, IDropHandler,IEndDragHan
 
     public void EquipArmor(Armor armor)
     {
-        armor.Remove();
-
-        if (MyEquippedArmor != null)
+        if(armor != null)
         {
-            Player.MyInstance.DEquipGear(MyEquippedArmor);
+            armor.Remove();
 
-            if (MyEquippedArmor != armor)
+            if (MyEquippedArmor != null)
             {
-                armor.MySlot.AddItem(MyEquippedArmor);
-                
+                Player.MyInstance.DEquipGear(MyEquippedArmor);
+
+                if (MyEquippedArmor != armor)
+                {
+                    armor.MySlot.AddItem(MyEquippedArmor);
+
+                }
+
+                UiManager.MyInstance.RefreshToolTip(MyEquippedArmor);
             }
-           
-            UiManager.MyInstance.RefreshToolTip(MyEquippedArmor);
-        }
 
-        
-        icon.enabled = true;
-        icon.sprite = armor.MyIcon;
-        icon.color = Color.white;
-        this.equippedArmor = armor;
-        HandScript.MyInstance.Drop();
-       
 
-        if (HandScript.MyInstance.MyMoveable == (armor as IMovable))
-        {
+            icon.enabled = true;
+            icon.sprite = armor.MyIcon;
+            icon.color = Color.white;
+            this.equippedArmor = armor;
             HandScript.MyInstance.Drop();
+
+
+            if (HandScript.MyInstance.MyMoveable == (armor as IMovable))
+            {
+                HandScript.MyInstance.Drop();
+            }
+
+            Player.MyInstance.EquipGear(armor);
         }
 
-        Player.MyInstance.EquipGear(armor);
+       
     }
 
     

@@ -39,11 +39,11 @@ public class Armor : Item
         }
         if (Strength > 0)
         {
-            stats += string.Format("\n +{0} strength", Intellect);
+            stats += string.Format("\n +{0} strength", Strength);
         }
         if (Vitality> 0)
         {
-            stats += string.Format("\n +{0} stamina", Intellect);
+            stats += string.Format("\n +{0} stamina", Vitality);
         }
        
         return base.GetDescription() + stats;

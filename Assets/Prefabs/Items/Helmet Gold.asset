@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 58062186e75c78441baad4ce9f5d3bf2, type: 3}
   stackSize: 0
-  title: WTF Helmet
+  title: Gold Helmet
   quality: 1
   price: 34
   armorType: 0
   intellect: 10
-  Strength: 10
-  stamina: 10
+  strength: 0
+  vitality: 0

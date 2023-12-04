@@ -36,14 +36,16 @@ public class HandScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        icon.transform.position = Input.mousePosition + offset;
-
-        if (Input.GetMouseButtonUp(0) && !EventSystem.current.IsPointerOverGameObject() && MyInstance.MyMoveable != null)
+        
+                
+        if(Input.touchCount > 0)
         {
-            DeleteItem();
+            Touch touch = Input.GetTouch(0);
+            Vector3 touchPositin = Camera.main.ScreenToWorldPoint(touch.position);
+            icon.transform.position = touchPositin;
         }
 
-       
+        icon.transform.position = Input.mousePosition;
     }
 
     public void TakeMoveable(IMovable moveable)
@@ -71,17 +73,16 @@ public class HandScript : MonoBehaviour
 
     public void DeleteItem()
     {
-        
+
 
         if (MyMoveable is Item && InventoryScripts.MyInstance.FromSlot != null)
         {
-
             (MyMoveable as Item).MySlot.Clear();
-            Debug.Log("delete");
-            
+
         }
 
         Drop();
+
         InventoryScripts.MyInstance.FromSlot = null;
 
 
@@ -89,7 +90,7 @@ public class HandScript : MonoBehaviour
 
 
 
-       
+
     }
 
    

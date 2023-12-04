@@ -30,13 +30,13 @@ public class Player : Character
     
     private FirstSkill firstskill;
 
-    private int intelligence;
+    private int intelligence = 10;
 
-    private int vitality;
+    private int vitality = 50;
 
-    private int strength;
+    private int strength = 2;
 
-    
+  
 
     [SerializeField]
     private Text levelText;
@@ -117,7 +117,12 @@ public class Player : Character
     }
 
     public Stat MyMana { get => mana; set => mana = value; }
+
     public FirstSkill MyFirstskill { get => firstskill; set => firstskill = value; }
+
+    
+    
+   
 
     private bool isDashing = false;
 
@@ -126,6 +131,9 @@ public class Player : Character
         base.Start();
         skillBook = GetComponent<SkillBook>();
         StartCoroutine(Regen());
+        UiManager.MyInstance.UpdateStatsText(intelligence, vitality, strength);
+      
+
     }
 
     protected override void Update()
@@ -144,18 +152,17 @@ public class Player : Character
     public void SetDefaultValues()
     {
         MyGold = 10000;
-        vitality = 50;
-        intelligence = 10;
-        strength = 2;
+        
         ResetStats();
         
         MyXp.Initialize(0, Mathf.Floor(100 * MyLevel * Mathf.Pow(MyLevel, 0.5f)));
         levelText.text = MyLevel.ToString();
         initPos = transform.parent.position;
         UiManager.MyInstance.UpdateStatsText(intelligence, vitality, strength);
+        
     }
 
-    private void ResetStats()
+    public void ResetStats()
     {
         MyHealth.Initialize(vitality * VitalityMultiplier(), vitality * VitalityMultiplier());
         MyMana.Initialize(intelligence * IntelligenceMultiplier(), intelligence * IntelligenceMultiplier());
@@ -163,15 +170,11 @@ public class Player : Character
     }
 
     
-    private void UpdateMaxStats()
+    public void UpdateMaxStats()
     {
         MyHealth.SetMaxValue(vitality * VitalityMultiplier());
         MyMana.SetMaxValue(intelligence * IntelligenceMultiplier());
-        
-
-
-
-             
+            
     }
 
     private int VitalityMultiplier()
@@ -202,19 +205,7 @@ public class Player : Character
         return 15;
     }
 
-    private int StrengthMultiplier()
-    {
-        if (MyLevel < 10)
-        {
-            return 2;
-        }
-        else if (MyLevel > 10)
-        {
-            return 4;
-        }
-
-        return 10;
-    }
+    
 
     public void SetLimits(Vector3 min, Vector3 max)
     {
@@ -237,7 +228,6 @@ public class Player : Character
         //  direction.y = 0;
         if (direction.x > 0)
         {
-            Debug.Log("right");
             exitIndex = 1;
             
             if (direction.y == 0)
@@ -248,7 +238,6 @@ public class Player : Character
 
         if (direction.x < 0)
         {
-            Debug.Log("left");
             exitIndex = 3;
             if (direction.y == 0)
             {
@@ -263,7 +252,6 @@ public class Player : Character
 
         if (direction.y > 0)
         {
-            Debug.Log("up");
             exitIndex = 0;
 
             minimapIcon.eulerAngles = new Vector3(0, 0, 0);
@@ -272,7 +260,7 @@ public class Player : Character
 
         if (direction.y < 0)
         {
-            Debug.Log("down");
+            
             exitIndex = 2;
             minimapIcon.eulerAngles = new Vector3(0, 0, 180);
 
@@ -296,32 +284,32 @@ public class Player : Character
             MyMana.MyCurrentValue += 10;
         }
 
-        if (Input.GetKey(KeybindManager.MyInstance.Keybinds["UPB"]))
-        {
-            exitIndex = 0;
-            Direction += Vector2.up;
-            minimapIcon.eulerAngles = new Vector3(0, 0, 0);
-        }
+        //if (Input.GetKey(KeybindManager.MyInstance.Keybinds["UPB"]))
+        //{
+        //    exitIndex = 0;
+        //    Direction += Vector2.up;
+        //    minimapIcon.eulerAngles = new Vector3(0, 0, 0);
+        //}
 
 
-        if (Input.GetKey(KeybindManager.MyInstance.Keybinds["DOWNB"]))
-        {
-            exitIndex = 2;
-            Direction += Vector2.down;
-            minimapIcon.eulerAngles = new Vector3(0, 0, 180);
-        }
+        //if (Input.GetKey(KeybindManager.MyInstance.Keybinds["DOWNB"]))
+        //{
+        //    exitIndex = 2;
+        //    Direction += Vector2.down;
+        //    minimapIcon.eulerAngles = new Vector3(0, 0, 180);
+        //}
 
 
-        if (Input.GetKey(KeybindManager.MyInstance.Keybinds["LEFTB"]))
-        {
-            exitIndex = 3;
-            Direction += Vector2.left;
-            if (Direction.y == 0)
-            {
-                minimapIcon.eulerAngles = new Vector3(0, 0, 90);
-            }
+        //if (Input.GetKey(KeybindManager.MyInstance.Keybinds["LEFTB"]))
+        //{
+        //    exitIndex = 3;
+        //    Direction += Vector2.left;
+        //    if (Direction.y == 0)
+        //    {
+        //        minimapIcon.eulerAngles = new Vector3(0, 0, 90);
+        //    }
 
-        }
+        //}
         if (Input.GetKeyDown(KeyCode.Space))
         {
             isDashing = true;
@@ -329,16 +317,16 @@ public class Player : Character
         
 
 
-        if (Input.GetKey(KeybindManager.MyInstance.Keybinds["RIGHTB"]))
-        {
-            exitIndex = 1;
-            Direction += Vector2.right;
+        //if (Input.GetKey(KeybindManager.MyInstance.Keybinds["RIGHTB"]))
+        //{
+        //    exitIndex = 1;
+        //    Direction += Vector2.right;
 
-            if (Direction.y == 0)
-            {
-                minimapIcon.eulerAngles = new Vector3(0, 0, 270);
-            }
-        }
+        //    if (Direction.y == 0)
+        //    {
+        //        minimapIcon.eulerAngles = new Vector3(0, 0, 270);
+        //    }
+        //}
 
         if (IsMoving)
         {
@@ -562,6 +550,8 @@ public class Player : Character
         {
             if (!inCombat)
             {
+                yield return new WaitForSeconds(3.5f);
+
                 if (health.MyCurrentValue < health.MyMaxValue)
                 {
                     int value = Mathf.FloorToInt(health.MyMaxValue * 0.05f);
@@ -581,7 +571,7 @@ public class Player : Character
                 }
             }
 
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(4.5f);
         }
 
         
@@ -641,7 +631,7 @@ public class Player : Character
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "MySkill")
+        if (collision.tag == "EMySkill")
         {
             Vector2 difference = transform.position - collision.transform.position;
             transform.position = new Vector2(transform.position.x + difference.x, transform.position.y + difference.y);

@@ -68,7 +68,7 @@ public class UiManager : MonoBehaviour
 
     private void Awake()
     {
-        keybindButtons = GameObject.FindGameObjectsWithTag("Keybind");
+
         toolTipText = toolTip.GetComponentInChildren<Text>();
     }
 

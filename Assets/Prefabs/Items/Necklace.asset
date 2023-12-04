@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 970730566, guid: 38f0a637c60659644bb132b612736248, type: 3}
   stackSize: 0
-  title: WTF Necklace
+  title: Shiny Necklace
   quality: 3
   price: 56
   armorType: 7
   intellect: 10
-  Strength: 10
-  stamina: 10
+  strength: 0
+  vitality: 0

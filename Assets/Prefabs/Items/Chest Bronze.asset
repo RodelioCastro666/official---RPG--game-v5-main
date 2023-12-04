@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: dd3775aff5f4e3a4ab2c89497e25f1f6, type: 3}
   stackSize: 0
-  title: WTF Chest
-  quality: 0
+  title: Bronze Chest
+  quality: 1
   price: 78
   armorType: 2
   intellect: 10
-  Strength: 10
-  stamina: 10
+  strength: 0
+  vitality: 0

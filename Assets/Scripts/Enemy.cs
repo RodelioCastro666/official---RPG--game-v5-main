@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public delegate void HealthChanged(float health);
 
@@ -30,6 +31,9 @@ public class Enemy : Character, IInteractable
 
     [SerializeField]
     protected int damage;
+
+    [SerializeField]
+    private GameObject gotHitScreen;
 
     private bool canDoDamage = true;
 
@@ -88,6 +92,20 @@ public class Enemy : Character, IInteractable
         }
         base.Update();
 
+        if(gotHitScreen != null)
+        {
+            if (gotHitScreen.GetComponent<Image>().color.a > 0)
+            {
+                var color = gotHitScreen.GetComponent<Image>().color;
+
+                color.a -= 0.01f;
+
+                gotHitScreen.GetComponent<Image>().color = color;
+            }
+        }
+
+        
+
     }
 
 
@@ -122,9 +140,11 @@ public class Enemy : Character, IInteractable
         if (canDoDamage)
         {
             MyTarget.TakeDamage(damage, this);
+
+            GotHurt();
             
             canDoDamage = false;
-           
+            
         }
 
         
@@ -145,8 +165,10 @@ public class Enemy : Character, IInteractable
             {
                 SetTarget(source);
                 base.TakeDamage(damage, source);
+                Debug.Log("oks");
 
                 OnHealthChanged(health.MyCurrentValue);
+                
 
                 if (!IsAlive)
                 {
@@ -157,6 +179,8 @@ public class Enemy : Character, IInteractable
 
           
         }
+
+       
        
     }
 
@@ -265,6 +289,14 @@ public class Enemy : Character, IInteractable
         }
 
         return true;
+    }
+
+    public void GotHurt()
+    {
+        var color = gotHitScreen.GetComponent<Image>().color;
+        color.a = 0.8f;
+
+        gotHitScreen.GetComponent<Image>().color = color;
     }
 
     //private void OnTriggerEnter2D(Collider2D collision)

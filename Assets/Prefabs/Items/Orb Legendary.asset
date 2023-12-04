@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 069daf3e3693d5f4bbdc4e9999149c20, type: 3}
   stackSize: 0
-  title: WTF Orb
+  title: Legendary Orb
   quality: 0
   price: 12
   armorType: 6
   intellect: 10
-  Strength: 10
-  stamina: 10
+  strength: 0
+  vitality: 0

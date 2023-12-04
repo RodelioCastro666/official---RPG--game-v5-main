@@ -22,15 +22,12 @@ public class BagScript : MonoBehaviour
         {
             SlotScript slot = Instantiate(slotPrefab, transform).GetComponent<SlotScript>();
             slot.MyIndex = i;
-            slot.MyBag = this;
+           
             MySlots.Add(slot);
         }
     }
 
-    public void Awake()
-    {
-        canvasGroup = GetComponent<CanvasGroup>();
-    }
+  
 
     public void OpenClose()
     {

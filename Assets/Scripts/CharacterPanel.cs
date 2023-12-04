@@ -54,8 +54,6 @@ public class CharacterPanel : MonoBehaviour
             case ArmorType.Chest:
                 chest.EquipArmor(armor);
                 break;
-            case ArmorType.Gloves:
-                break;
             case ArmorType.Boots:
                 boots.EquipArmor(armor);
                 break;
@@ -78,4 +76,6 @@ public class CharacterPanel : MonoBehaviour
 
 
     }
+
+
 }

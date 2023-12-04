@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 5baffcdcdefa53c44ade436ba9c3fb8e, type: 3}
   stackSize: 0
-  title: WTF Helmet
+  title: Diamond Helmet
   quality: 1
   price: 34
   armorType: 0
   intellect: 10
-  Strength: 10
-  stamina: 10
+  strength: 0
+  vitality: 0

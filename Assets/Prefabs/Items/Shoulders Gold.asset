@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 06bfcdcd4f8dc74448e259527d2ddcab, type: 3}
   stackSize: 0
-  title: WTF Shoulders
+  title: Gold Shoulders
   quality: 0
   price: 45
   armorType: 1
   intellect: 10
-  Strength: 10
-  stamina: 10
+  strength: 0
+  vitality: 0
