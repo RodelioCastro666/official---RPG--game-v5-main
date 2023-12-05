@@ -118,7 +118,7 @@ public class QuestLog : MonoBehaviour
                 objectives += obj.MyType + ": " + obj.MyCurrenAmount + "/" + obj.MyAmount + "\n";
             }
 
-            questDescription.text = string.Format("{0} \n<size=10>{1}</size>\nObjectives\n<size=10>{2}</size>", title, quest.MyDescription, objectives);
+            questDescription.text = string.Format("{0} \n<size=20>{1}</size>\nObjectives\n<size=20>{2}</size>", title, quest.MyDescription, objectives);
         }
 
         

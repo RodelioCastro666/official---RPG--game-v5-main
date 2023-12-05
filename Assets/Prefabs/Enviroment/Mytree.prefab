@@ -221,7 +221,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 2b683dd663bbe4c41aa5a250fe5dc0f1, type: 3}
+  m_Sprite: {fileID: 1424458144, guid: 670730d9280131f41908bc9a80f4cf65, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -248,8 +248,8 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.03125, y: 4.1875}
+    pivot: {x: 0.70600057, y: 0.6306346}
+    oldSize: {x: 4.8, y: 4.8}
     newSize: {x: 3.03125, y: 4.1875}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -328,8 +328,8 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: a2cb129f098ea724489d5bbe0cfb8b58, type: 2}
     dropChance: 50
   spriteRenderer: {fileID: 5547044561912542987}
-  defaultSprite: {fileID: 21300000, guid: 2b683dd663bbe4c41aa5a250fe5dc0f1, type: 3}
-  gatherSprite: {fileID: 392406787, guid: e5a1767e53eb8e548affcedb52bd2638, type: 3}
+  defaultSprite: {fileID: 1424458144, guid: 670730d9280131f41908bc9a80f4cf65, type: 3}
+  gatherSprite: {fileID: 1424458144, guid: 670730d9280131f41908bc9a80f4cf65, type: 3}
   gatherIndicator: {fileID: 926232982907529703}
 --- !u!58 &5882115413781256479
 CircleCollider2D:

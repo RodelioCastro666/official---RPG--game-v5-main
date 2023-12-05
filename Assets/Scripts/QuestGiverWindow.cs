@@ -117,7 +117,7 @@ public class QuestGiverWindow : Window
             objectives += obj.MyType + ": " + obj.MyCurrenAmount + "/" + obj.MyAmount + "\n";
         }
 
-        questDescription.GetComponent<Text>().text = string.Format("{0} \n<size=10>{1}</size>\n\nObjectives\n<size=10>{2}</size>", quest.MyTitle, quest.MyDescription, objectives);
+        questDescription.GetComponent<Text>().text = string.Format("{0} \n<size=20>{1}</size>\n\nObjectives\n<size=20>{2}</size>", quest.MyTitle, quest.MyDescription, objectives);
     }
 
     public void Back()
