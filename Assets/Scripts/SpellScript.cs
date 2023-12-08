@@ -1,6 +1,7 @@
     using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SpellScript : MonoBehaviour
 {
@@ -17,11 +18,11 @@ public class SpellScript : MonoBehaviour
 
     public Transform MyTarget { get; private set; }
 
+    
+
     void Start()
     {
         myRigidBody = GetComponent<Rigidbody2D>();
-
-        
     }
 
     
@@ -61,8 +62,12 @@ public class SpellScript : MonoBehaviour
             speed = 0;
             c.TakeDamage(damage,source);
             GetComponent<Animator>().SetTrigger("impact");
+            
             myRigidBody.velocity = Vector2.zero;
             MyTarget = null;
+            
         }
-    } 
+    }
+
+  
 }

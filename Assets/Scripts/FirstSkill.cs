@@ -15,7 +15,7 @@ public class FirstSkill : MonoBehaviour
 
     public int  fsdamage;
 
-    private Transform source;
+    private Character source;
 
     [SerializeField]
     private Rigidbody2D myrigidbody;
@@ -30,7 +30,7 @@ public class FirstSkill : MonoBehaviour
         myrigidbody = GetComponent<Rigidbody2D>();
     }
 
-    public void Initialize(int damage, Transform source)
+    public void Initialize(int damage, Character source)
     {
         this.fsdamage = damage;
         this.source = source;
@@ -52,7 +52,7 @@ public class FirstSkill : MonoBehaviour
         {
             shake.CamSHAKE();
             speed = 0;
-            collision.GetComponent<Enemy>().TakeDamage(fsdamage);
+            collision.GetComponent<Enemy>().TakeDamage(fsdamage, source);
             GetComponent<Animator>().SetTrigger("Impacto");
             myrigidbody.velocity = Vector2.zero;
         }

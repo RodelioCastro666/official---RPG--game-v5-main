@@ -183,16 +183,16 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hoyka
+      name: Log
       rect:
         serializedVersion: 2
         x: 129
-        y: 119
-        width: 29
-        height: 41
+        y: 127
+        width: 31
+        height: 32
       alignment: 9
       pivot: {x: 0.5, y: 0.51062757}
-      border: {x: 0, y: 8, z: 0, w: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -207,10 +207,10 @@ TextureImporter:
       name: togin
       rect:
         serializedVersion: 2
-        x: 2
+        x: 0
         y: 194
-        width: 31
-        height: 27
+        width: 32
+        height: 30
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -228,10 +228,10 @@ TextureImporter:
       name: diand
       rect:
         serializedVersion: 2
-        x: 36
+        x: 32
         y: 194
-        width: 24
-        height: 27
+        width: 32
+        height: 30
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -249,10 +249,10 @@ TextureImporter:
       name: sotan
       rect:
         serializedVersion: 2
-        x: 67
-        y: 191
-        width: 25
-        height: 28
+        x: 64
+        y: 192
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -309,13 +309,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: togin-maliit
+      name: Gold  Fragment
       rect:
         serializedVersion: 2
-        x: 4
-        y: 164
-        width: 22
-        height: 23
+        x: 0
+        y: 161
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -330,13 +330,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: diand-maliit
+      name: Diamond Fragment
       rect:
         serializedVersion: 2
         x: 33
-        y: 163
-        width: 26
-        height: 25
+        y: 161
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -351,13 +351,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sotan-maliit
+      name: Bronze Fragment
       rect:
         serializedVersion: 2
-        x: 67
-        y: 165
-        width: 25
-        height: 20
+        x: 65
+        y: 161
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -372,13 +372,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sotan-buo
+      name: Bronze Chunk
       rect:
         serializedVersion: 2
-        x: 101
-        y: 163
-        width: 22
-        height: 28
+        x: 97
+        y: 161
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -393,13 +393,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: togin-buo
+      name: Gold Chunk
       rect:
         serializedVersion: 2
         x: 130
-        y: 163
-        width: 27
-        height: 29
+        y: 162
+        width: 30
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -414,13 +414,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: diand-malaki
+      name: Diamond Chunk
       rect:
         serializedVersion: 2
         x: 99
         y: 129
-        width: 26
-        height: 30
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -435,13 +435,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hoyka-maliit
+      name: Branch Wood
       rect:
         serializedVersion: 2
-        x: 100
+        x: 99
         y: 97
-        width: 26
-        height: 31
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -461,8 +461,8 @@ TextureImporter:
         serializedVersion: 2
         x: 99
         y: 61
-        width: 30
-        height: 30
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -508,21 +508,21 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      Branch Wood: -1380725155
+      Bronze Chunk: -1900843725
+      Bronze Fragment: 334250307
+      Diamond Chunk: 943138727
+      Diamond Fragment: -276565868
+      Gold  Fragment: 1334752077
+      Gold Chunk: -1761174303
+      Log: 304784824
       arep1: 2096278107
       arep2: 62885192
       diand: -1660669783
-      diand-malaki: 943138727
-      diand-maliit: -276565868
       ex-nino: 1313609147
-      hoyka: 304784824
-      hoyka-maliit: -1380725155
       manong_kuku: -1794710407
       sotan: -1517641978
-      sotan-buo: -1900843725
-      sotan-maliit: 334250307
       togin: -2122705474
-      togin-buo: -1761174303
-      togin-maliit: 1334752077
       unop: 1424458144
       unop-tolpu: 1683879230
   spritePackingTag: 

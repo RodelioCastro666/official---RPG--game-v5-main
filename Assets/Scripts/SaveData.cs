@@ -62,7 +62,7 @@ public class PlayerData
 
 
 
-    public PlayerData(int level, float xp, float maxXp, float health, float maxHealth, float mana, float maxMana ,Vector2 position)
+    public PlayerData(int level, float xp, float maxXp, float health, float maxHealth, float mana, float maxMana ,Vector3 position)
     {
         this.MyLevel = level;
         this.MyXp = xp;
@@ -72,6 +72,7 @@ public class PlayerData
         this.MyMana = mana;
         this.MyMaxMana = maxMana;
         this.MyX = position.x;
+        this.MyY = position.y;
         
     }
 }

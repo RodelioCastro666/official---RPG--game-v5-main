@@ -88,7 +88,7 @@ public class Player : Character
 
     private Vector3 max, min;
 
-    private List<Enemy> attackers = new List<Enemy>();
+   
 
     private float initMana = 50;
 
@@ -97,7 +97,8 @@ public class Player : Character
     [SerializeField]
     private Transform minimapIcon;
 
-    
+    [SerializeField]
+    private GameObject gotHitScreen;
 
     [SerializeField]
     private FixedJoystick JoyStick;
@@ -119,10 +120,6 @@ public class Player : Character
     public Stat MyMana { get => mana; set => mana = value; }
 
     public FirstSkill MyFirstskill { get => firstskill; set => firstskill = value; }
-
-    
-    
-   
 
     private bool isDashing = false;
 
@@ -284,49 +281,49 @@ public class Player : Character
             MyMana.MyCurrentValue += 10;
         }
 
-        //if (Input.GetKey(KeybindManager.MyInstance.Keybinds["UPB"]))
-        //{
-        //    exitIndex = 0;
-        //    Direction += Vector2.up;
-        //    minimapIcon.eulerAngles = new Vector3(0, 0, 0);
-        //}
+        if (Input.GetKey(KeyCode.W))
+        {
+            exitIndex = 0;
+            Direction += Vector2.up;
+            minimapIcon.eulerAngles = new Vector3(0, 0, 0);
+        }
 
 
-        //if (Input.GetKey(KeybindManager.MyInstance.Keybinds["DOWNB"]))
-        //{
-        //    exitIndex = 2;
-        //    Direction += Vector2.down;
-        //    minimapIcon.eulerAngles = new Vector3(0, 0, 180);
-        //}
+        if (Input.GetKey(KeyCode.S))
+        {
+            exitIndex = 2;
+            Direction += Vector2.down;
+            minimapIcon.eulerAngles = new Vector3(0, 0, 180);
+        }
 
 
-        //if (Input.GetKey(KeybindManager.MyInstance.Keybinds["LEFTB"]))
-        //{
-        //    exitIndex = 3;
-        //    Direction += Vector2.left;
-        //    if (Direction.y == 0)
-        //    {
-        //        minimapIcon.eulerAngles = new Vector3(0, 0, 90);
-        //    }
+        if (Input.GetKey(KeyCode.A))
+        {
+            exitIndex = 3;
+            Direction += Vector2.left;
+            if (Direction.y == 0)
+            {
+                minimapIcon.eulerAngles = new Vector3(0, 0, 90);
+            }
 
-        //}
+        }
         if (Input.GetKeyDown(KeyCode.Space))
         {
             isDashing = true;
         }
-        
 
 
-        //if (Input.GetKey(KeybindManager.MyInstance.Keybinds["RIGHTB"]))
-        //{
-        //    exitIndex = 1;
-        //    Direction += Vector2.right;
 
-        //    if (Direction.y == 0)
-        //    {
-        //        minimapIcon.eulerAngles = new Vector3(0, 0, 270);
-        //    }
-        //}
+        if (Input.GetKey(KeyCode.D))
+        {
+            exitIndex = 1;
+            Direction += Vector2.right;
+
+            if (Direction.y == 0)
+            {
+                minimapIcon.eulerAngles = new Vector3(0, 0, 270);
+            }
+        }
 
         if (IsMoving)
         {
@@ -410,11 +407,13 @@ public class Player : Character
     public IEnumerator Respawn()
     {
         MySpriteRenderer.enabled = false;
+        direction = Vector2.zero;
         yield return new WaitForSeconds(5f);
         health.Initialize(initHealth, initHealth);
         MyMana.Initialize(initMana, initMana);
         transform.parent.position = initPos;
         MySpriteRenderer.enabled = true;
+       
         MyAnimator.SetTrigger("respawn");
     }
 
@@ -550,7 +549,7 @@ public class Player : Character
         {
             if (!inCombat)
             {
-                yield return new WaitForSeconds(3.5f);
+                yield return new WaitForSeconds(2.5f);
 
                 if (health.MyCurrentValue < health.MyMaxValue)
                 {
@@ -571,7 +570,7 @@ public class Player : Character
                 }
             }
 
-            yield return new WaitForSeconds(4.5f);
+            yield return new WaitForSeconds(2.5f);
         }
 
         
@@ -629,12 +628,22 @@ public class Player : Character
        
     }
 
+    public void GotHurt()
+    {
+        var color = gotHitScreen.GetComponent<Image>().color;
+        color.a = 0.8f;
+
+        gotHitScreen.GetComponent<Image>().color = color;
+    }
+
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "EMySkill")
         {
             Vector2 difference = transform.position - collision.transform.position;
             transform.position = new Vector2(transform.position.x + difference.x, transform.position.y + difference.y);
+            GotHurt();
+            
         }
         if (collision.tag == "Enemy" || collision.tag == "Interactable")
         {
@@ -819,7 +828,7 @@ public class Player : Character
 
                     FirstSkill firstSkill = Instantiate(skill.MySkillPrefab, transform.position, Quaternion.identity).GetComponent<FirstSkill>();
                     firstSkill.SetUp(temp, ChooseFirstSkillDirection());
-                    firstSkill.Initialize(skill.MyDamage * strength, transform);
+                    firstSkill.Initialize(skill.MyDamage * strength, this);
 
                     yield return new WaitForSeconds(0.5f);
 

@@ -226,8 +226,6 @@ public class Character : MonoBehaviour
             MyRigidbody.velocity = Direction;
             GameManager.MyInstance.OnKillConfirmed(this);
             MyAnimator.SetTrigger("die");
-
-           
         }
     }
     public virtual void TakeDamage(float damage)

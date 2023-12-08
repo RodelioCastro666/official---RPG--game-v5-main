@@ -52,6 +52,8 @@ public class SaveManager : MonoBehaviour
 
     private void Start()
     {
+        
+
         if (PlayerPrefs.HasKey("Load"))
         {
             Load(saveSlots[PlayerPrefs.GetInt("Load")]);
@@ -66,7 +68,7 @@ public class SaveManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+     
     }
 
     public void ShowDialogue(GameObject clickButton)
@@ -149,17 +151,21 @@ public class SaveManager : MonoBehaviour
 
             data.MyScene = SceneManager.GetActiveScene().name;
 
-            SavePlayer(data);
+            
 
             SaveInventory(data);
 
             SaveEquipment(data);
 
+            SavePlayer(data);
+
+            
+
             SaveBags(data);
 
             
 
-            
+
 
             SaveChest(data);
 
@@ -209,7 +215,9 @@ public class SaveManager : MonoBehaviour
              Player.MyInstance.MyMana.MyCurrentValue, Player.MyInstance.MyMana.MyMaxValue,
              Player.MyInstance.transform.position);
 
-        Debug.Log(Player.MyInstance.MyMana.MyMaxValue + "   Save");
+        Debug.Log(Player.MyInstance.transform.position);
+
+        
     }
 
     private void SaveChest(SaveData data)
@@ -309,21 +317,30 @@ public class SaveManager : MonoBehaviour
 
             file.Close();
 
+
+
+            
+
+
             LoadInventory(data);
-
-            LoadPlayer(data);
-
-            LoadEquipemnt(data);
 
             LoadBags(data);
 
+            LoadEquipemnt(data);
+
+
             LoadChest(data);
+
+
+            
 
             LoadActionButton(data);
 
             LoadQuest(data);
 
             LoadQuestGiver(data);
+
+            LoadPlayer(data);
 
 
         }
@@ -343,11 +360,9 @@ public class SaveManager : MonoBehaviour
         Player.MyInstance.MyHealth.Initialize(data.MyPlayerData.MyHealth, data.MyPlayerData.MyMaxHealth);
         Player.MyInstance.MyMana.Initialize(data.MyPlayerData.MyMana, data.MyPlayerData.MyMaxMana);
         Player.MyInstance.MyXp.Initialize(data.MyPlayerData.MyXp, data.MyPlayerData.MyMaxXp);
-        
-  
-        Player.MyInstance.transform.position = new Vector2(data.MyPlayerData.MyX, data.MyPlayerData.MyY);
+        Player.MyInstance.transform.position = new Vector3(data.MyPlayerData.MyX, data.MyPlayerData.MyY);
 
-        Debug.Log(Player.MyInstance.MyMana.MyMaxValue + "    LOAD");
+        Debug.Log(Player.MyInstance.transform.position);
 
     }
 

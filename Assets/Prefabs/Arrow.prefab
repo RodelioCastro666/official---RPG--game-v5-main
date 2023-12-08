@@ -123,6 +123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   myRigidBody: {fileID: 6822345618510150195}
+  gotHitScreen: {fileID: 0}
 --- !u!95 &4051340414714303493
 Animator:
   serializedVersion: 5

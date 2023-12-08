@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DGrass
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 835262429, guid: 2f9818923a9c3fa45a3d02a7d5dd7372, type: 3}
-  m_Color: {r: 0.7075472, g: 0.33641866, b: 0.33641866, a: 1}
+  m_Color: {r: 0.7735849, g: 0.49188322, b: 0.49188322, a: 1}
   m_Transform:
     e00: 1
     e01: 0

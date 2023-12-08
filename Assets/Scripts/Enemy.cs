@@ -13,6 +13,7 @@ public class Enemy : Character, IInteractable
 
     public event CharacterRemoved characterRemoved;
 
+    
 
     [SerializeField]
     private CanvasGroup healthGroup;
@@ -164,16 +165,18 @@ public class Enemy : Character, IInteractable
             if (IsAlive)
             {
                 SetTarget(source);
-                base.TakeDamage(damage, source);
-                Debug.Log("oks");
+                base.TakeDamage(damage);
+                
 
                 OnHealthChanged(health.MyCurrentValue);
                 
 
                 if (!IsAlive)
                 {
+                    
                     source.RemoveAttacker(this);
                     Player.MyInstance.GainXP(Xpmanager.CalculateXP(this as Enemy));
+                   
                 }
             }
 
